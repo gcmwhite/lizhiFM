@@ -1,7 +1,10 @@
 # lizhiFM_5
 已实现荔枝FM的基本功能，目前还没有做美工
+
 剩下的等闲下来了再做
+
 代码看着很乱，本来准备整理一下再发的。但是太忙了，就先这样吧
+
 windows截屏：
 ![image](https://github.com/gcmwhite/lizhiFM/blob/master/images/2018-01-23_192631.png)
 ![image](https://github.com/gcmwhite/lizhiFM/blob/master/images/2018-01-23_192653.png)
