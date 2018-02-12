@@ -12,7 +12,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 本软件部分素材来自互联网，有任何侵权行为请发送邮件到：itoday_06#qq.com （将#换为@）
 
-- 下载地址：[https://pan.baidu.com/s/1nw6Vzcd](# lizhiFM
+- 下载地址：[https://pan.baidu.com/s/1nw6Vzcd ](https://pan.baidu.com/s/1nw6Vzcd )密码: 3f4m
 
 **声明：**
 
@@ -25,8 +25,6 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 本软件请勿用于任何商业行为
 
 本软件部分素材来自互联网，有任何侵权行为请发送邮件到：itoday_06#qq.com （将#换为@）
-
-- 下载地址：[https://pan.baidu.com/s/1nw6Vzcd](https://note.youdao.com/) 密码: 3f4m
 
 
 - 荔枝FM客户端 1.1
@@ -165,7 +163,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 软件以单独打包为appimage格式
 
-百度云下载地址：[https://pan.baidu.com/s/1nw6Vzcd](https://pan.baidu.com/s/1nw6Vzcd) 密码: 3f4m
+百度云下载地址：[https://pan.baidu.com/s/1nw6Vzcd](https://pan.baidu.com/s/1nw6Vzcd)密码: 3f4m
 
 下载文件 荔枝FM_7-x86_64.AppImage
 
