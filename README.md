@@ -1,6 +1,6 @@
 # lizhiFM
 
-**声明：**
+- **声明：**
 
 本软件基于Qt 5.10编写
 
@@ -28,6 +28,20 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 - 下载地址：[https://pan.baidu.com/s/1nw6Vzcd ](https://pan.baidu.com/s/1nw6Vzcd )密码: 3f4m
 
+- 安装
+若下载为Appimage格式的，赋予可执行权限，终端打开
+
+```
+./荔枝FM_1.1-x86_64.AppImage
+```
+
+若下载为tar.bz2格式的，直接解压出来放在你要安装的目录，赋予lizhifm文件可执行权限，双击应该就可以运行了
+
+运行creatDesktop.sh创建桌面快捷方式
+
+Appimage格式请自行创建桌面文件
+
+
 
 - 荔枝FM客户端 1.1
 ![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-33%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
@@ -44,7 +58,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 不要问为什么没有搜索按钮，因为官方主页就没有搜索功能
 
 - 可能会出现的问题：
-有时候播放的时候会突然没声音
+1. ++有时候播放的时候会突然没声音++
 
 网络原因，等待加载。或先暂停一段时间再运行，或直接拖动进度条
 
@@ -57,6 +71,14 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 ![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-24-22%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 如图等缓冲加载到100的时候才可以正常播放
+
+2. ++软件无法正常启动++
+
+报告qt_5_10 not foun错误，没有安装qt运行库，安装qt运行库就行了
+
+3. ++软件可以启动但是没有声音++
+
+没有安装解码器，安装LAV Filters解码器即可
 
 - 程序部分截图：
 
