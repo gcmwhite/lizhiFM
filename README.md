@@ -1,6 +1,34 @@
 # lizhiFM
-荔枝FM客户端
-![image](https://github.com/gcmwhite/lizhiFM/blob/master/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180128162817.png)
+
+声明：
+
+本软件基于Qt 5.10编写
+
+FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资源版权
+
+目的仅为学习和交流，以及方便更多的荔枝FM的爱好者收听节目
+
+本软件请勿用于任何商业行为
+
+本软件部分素材来自互联网，有任何侵权行为请发送邮件到：itoday_06#qq.com （将#换为@）
+
+-下载地址：https://pan.baidu.com/s/1nw6Vzcd 密码: 3f4m
+
+
+-荔枝FM客户端 1.1
+![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-33%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+更新日期：2018年2月11日
+
+本次更新内容：
+
+优化界面风格，添加了8款皮肤背景，并且可以设置自定义背景
+
+添加了皮肤、github、设置、捐赠、关于按钮，其中设置项不可用
+
+保存播放列表、进度等信息，不用每次打开都重新开始
+
+
+-荔枝FM客户端 1.0
 
 修复了一些BUG，优化启动速度。
 
