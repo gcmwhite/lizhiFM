@@ -29,6 +29,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 - 下载地址：[https://pan.baidu.com/s/1nw6Vzcd ](https://pan.baidu.com/s/1nw6Vzcd )密码: 3f4m
 
 - 安装
+
 若下载为Appimage格式的，赋予可执行权限，终端打开
 
 ```
@@ -78,7 +79,7 @@ Appimage格式请自行创建桌面文件
 
 3. ++软件可以启动但是没有声音++
 
-没有安装解码器，安装LAV Filters解码器即可
+没有安装解码器，安装通用解码器即可
 
 - 程序部分截图：
 
