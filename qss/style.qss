@@ -1,0 +1,47 @@
+
+/*按钮*/
+
+QPushButton[flat="false"]{padding:6px;background:rgba(0,152,50,0.2);border:1px solid #FCFCFC;border-radius:10px;}
+
+QPushButton[flat="false"]:hover{background:#DCDCDC;}
+
+QPushButton[flat="false"]:pressed{background:#FCFCFC;}
+
+/*列表*/
+
+QListWidget{border: 1px solid #BFBFBF; border-radius: 5px;background-color:transparent}
+
+
+/*控制栏*/
+
+QWidget#controlWidget{border: 1px solid #BFBFBF; border-radius: 5px;}
+
+/*滚动条*/
+QScrollBar{background:transparent;}
+
+/*Tab页面*/
+QTabWidget::pane {border:1px solid #BFBFBF;border-radius: 5px;background:transparent; }
+
+/*TabBar*/
+QTabBar::tab {background:transparent;border:1px solid #BFBFBF;border-top-left-radius:6px;border-top-right-radius:6px;
+min-width:15ex;min-height:20px;padding:6px;}
+
+QTabBar::tab:selected{font-weight:bold;}
+
+QTabBar::tab:!selected{font-weight:normal;margin-top:2px;}
+
+/*进度条*/
+
+QSlider::add-page:Horizontal{background-color: rgb(87, 97, 106);height:4px;}
+
+QSlider::sub-page:Horizontal{background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(231,80,229, 255), stop:1 rgba(7,208,255, 255));height:4px;}
+
+QSlider::groove:Horizontal{background:transparent;height:6px;}
+
+QSlider::handle:horizontal{background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5,stop:0.6 #45ADED, stop:0.778409 rgba(255, 255, 255, 255));width: 11px;margin-top: -3px;margin-bottom: -3px;border-radius: 5px;}
+
+QSlider::handle:horizontal:hover{background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));width: 11px margin-top: -3px;margin-bottom: -3px;border-radius: 5px;}
+
+
+
+
