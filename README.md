@@ -44,16 +44,16 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 如图等缓冲加载到100的时候才可以正常播放
 
-- 程序截图：
+- 程序部分截图：
 
-![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-33%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 主界面
+![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-33%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
-![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-44%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 分类列表
+![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-44%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
-![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-59%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 皮肤设置
+![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-33-59%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
 
 
 - 荔枝FM客户端 1.0
@@ -70,7 +70,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 软件以单独打包为appimage格式
 
-百度云下载地址：https://pan.baidu.com/s/1nw6Vzcd 密码: 3f4m
+百度云下载地址：[https://pan.baidu.com/s/1nw6Vzcd](https://pan.baidu.com/s/1nw6Vzcd) 密码: 3f4m
 
 下载文件 荔枝FM_7-x86_64.AppImage
 
@@ -82,7 +82,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 - 关于捐赠：
 
-![image](hhttps://github.com/gcmwhite/lizhiFM/blob/master/printscreen/2018-02-12%2013-34-41%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png)
+![image](https://github.com/gcmwhite/lizhiFM/blob/master/printscreen/%E6%B7%B1%E5%BA%A6%E6%88%AA%E5%9B%BE_%E9%80%89%E6%8B%A9%E5%8C%BA%E5%9F%9F_20180128162817.png)
 
 本次增加了捐赠的二维码，支持支付宝和微信捐赠
 
