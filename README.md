@@ -26,7 +26,7 @@ FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资�
 
 二维码顺序：支付宝、微信赞赏、支付宝赏金
 
-- 下载地址：[https://pan.baidu.com/s/1nw6Vzcd ](https://pan.baidu.com/s/1nw6Vzcd )密码: 3f4m
+- 下载地址：链接: https://pan.baidu.com/s/1pMz1fLL 密码: jsrf
 
 - 安装
 
@@ -111,7 +111,7 @@ Appimage格式请自行创建桌面文件
 
 软件以单独打包为appimage格式
 
-百度云下载地址：[https://pan.baidu.com/s/1nw6Vzcd](https://pan.baidu.com/s/1nw6Vzcd) 密码: 3f4m
+百度云下载地址：链接: https://pan.baidu.com/s/1pMz1fLL 密码: jsrf
 
 下载文件 荔枝FM_7-x86_64.AppImage
 
