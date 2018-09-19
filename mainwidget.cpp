@@ -57,9 +57,15 @@ void MainWidget::init_network_()
 
     musicListWidget = new MusicListWidget;
     stackedLayout->addWidget(musicListWidget);
+
     //绑定hot_grid_widget按钮
-    connect(hot_grid_widget,&GridBtnWidget::grid_btn_signal,[=](const QString &path){
+    connect(hot_grid_widget,&GridBtnWidget::grid_btn_signal,this,[=](const QString &path){
         musicListWidget->set_music_list_widget(lizhiAPI->get_music_list(path));
         stackedLayout->setCurrentWidget(musicListWidget);
+    });
+
+    //返回tabWidget
+    connect(musicListWidget,&MusicListWidget::back_btn_clicked_signal,this,[=](){
+        stackedLayout->setCurrentWidget(tabWidget);
     });
 }

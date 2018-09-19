@@ -23,5 +23,6 @@
         <file>imgs/start.gif</file>
         <file>imgs/next_page.ico</file>
         <file>imgs/previous_page.ico</file>
+        <file>imgs/back_.ico</file>
     </qresource>
 </RCC>

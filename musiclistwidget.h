@@ -6,6 +6,8 @@
 #include <QTableView>
 #include <QStandardItemModel>
 #include <QVector>
+#include <QLabel>
+#include <QPushButton>
 
 class MusicListWidget : public QWidget
 {
@@ -21,8 +23,14 @@ private:
     QVBoxLayout *mainLayout;
     QStandardItemModel *head;
     int index_page = 1;
+    QPushButton *back_btn;
+    QLabel *title_label;
+    QPushButton *previous_btn;
+    QPushButton *next_btn;
+    QLabel *page_label;
 
 signals:
+    void back_btn_clicked_signal();
 
 public slots:
 };
