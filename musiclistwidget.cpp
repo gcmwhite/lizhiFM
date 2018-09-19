@@ -32,6 +32,7 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     hboxLayout_1->addWidget(title_label);
 
     back_btn->setFlat(true);
+    back_btn->setToolTip("返回");
     back_btn->setFixedSize(_SIZE_);
     back_btn->setIcon(QIcon(":/imgs/back_.ico"));
     back_btn->setIconSize(_SIZE_);
@@ -53,12 +54,14 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     page_label->setAlignment(Qt::AlignCenter);
 
     previous_btn->setFlat(true);
+    previous_btn->setToolTip("上一页");
     previous_btn->setEnabled(false);
     previous_btn->setFixedSize(_SIZE_);
     previous_btn->setIcon(QIcon(":/imgs/previous_page.ico"));
     previous_btn->setIconSize(_SIZE_);
 
     next_btn->setFlat(true);
+    next_btn->setToolTip("下一页");
     next_btn->setFixedSize(_SIZE_);
     next_btn->setIcon(QIcon(":/imgs/next_page.ico"));
     next_btn->setIconSize(_SIZE_);
