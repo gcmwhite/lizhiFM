@@ -10,7 +10,7 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
         timer_->stop();
         init_network_();
     });
-    timer_->start(50);
+    timer_->start(10);
 }
 
 //主界面初始化
@@ -33,12 +33,16 @@ void MainWidget::init_ui_()
     tabWidget->addTab(radioType,"节目类型");
 
     mainLayout = new QGridLayout(this);
+    stackedLayout = new QStackedLayout;
+    stackedLayout->setMargin(0);
+    stackedLayout->addWidget(tabWidget);
+    stackedLayout->setCurrentWidget(tabWidget);
 
     mainLayout->setMargin(10);
     mainLayout->setSpacing(5);
 
     mainLayout->addWidget(leftWidget,0,0);
-    mainLayout->addWidget(tabWidget,0,1);
+    mainLayout->addLayout(stackedLayout,0,1);
     mainLayout->addWidget(footWidget,1,0,2,0);
 
 }
@@ -47,6 +51,15 @@ void MainWidget::init_ui_()
 void MainWidget::init_network_()
 {
     lizhiAPI = new LiZhiAPI(this);
-    lizhiAPI->get_radio_type();
-//    radioType->setRadioType(lizhiAPI->get_radio_type());
+    radioType->setRadioType(lizhiAPI->get_radio_type());                                        //获取节目类别
+    hot_grid_widget->set_grid_btn_widget(lizhiAPI->get_hot_grid());                             //获取热门电台
+    optimization_grid_widget->set_grid_btn_widget(lizhiAPI->get_optimization_grid());           //获取优选电台
+
+    musicListWidget = new MusicListWidget;
+    stackedLayout->addWidget(musicListWidget);
+    //绑定hot_grid_widget按钮
+    connect(hot_grid_widget,&GridBtnWidget::grid_btn_signal,[=](const QString &path){
+        musicListWidget->set_music_list_widget(lizhiAPI->get_music_list(path));
+        stackedLayout->setCurrentWidget(musicListWidget);
+    });
 }

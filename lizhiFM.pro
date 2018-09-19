@@ -36,7 +36,8 @@ HEADERS += \
     tabwidget.h \
     lizhiapi.h \
     gridbtnwidget.h \
-    radiotype.h
+    radiotype.h \
+    musiclistwidget.h
 
 SOURCES += \
     mainwidget.cpp \
@@ -48,4 +49,5 @@ SOURCES += \
     main.cpp \
     lizhiapi.cpp \
     gridbtnwidget.cpp \
-    radiotype.cpp
+    radiotype.cpp \
+    musiclistwidget.cpp

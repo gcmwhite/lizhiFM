@@ -7,8 +7,10 @@
 #include "gridbtnwidget.h"
 #include "radiotype.h"
 #include "lizhiapi.h"
+#include "musiclistwidget.h"
 #include <QWidget>
 #include <QGridLayout>
+#include <QStackedLayout>
 
 class MainWidget : public QWidget
 {
@@ -27,6 +29,8 @@ private:
     GridBtnWidget *optimization_grid_widget;
     RadioType *radioType;
     LiZhiAPI *lizhiAPI;
+    MusicListWidget *musicListWidget;
+    QStackedLayout *stackedLayout;
 
 signals:
 
