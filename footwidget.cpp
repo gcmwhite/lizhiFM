@@ -1,18 +1,32 @@
 #include "footwidget.h"
+#include <QHBoxLayout>
 
 FootWidget::FootWidget(QWidget *parent) : QWidget(parent)
 {
-    mainLayout = new QHBoxLayout(this);
-    timeLabel = new QLabel;
-    timeLabel->setText("00:00");
-    remainingTimeLabel = new QLabel;
-    remainingTimeLabel->setText("00:00");
-    timeSlider = new QSlider;
-    timeSlider->setOrientation(Qt::Horizontal);
-    mainLayout->addWidget(timeLabel);
-    mainLayout->addWidget(timeSlider);
-    mainLayout->addWidget(remainingTimeLabel);
+    start_time_label_ = new QLabel;
+    remaining_time_label_ = new QLabel;
+    time_slider_ = new QSlider(Qt::Horizontal);
+    sound_slider_ = new QSlider(Qt::Horizontal);
+    mute_btn_ = new QPushButton;
 
+    QHBoxLayout *mainLayout = new QHBoxLayout(this);
     mainLayout->setMargin(0);
+    mainLayout->setSpacing(6);
 
+    mainLayout->addWidget(start_time_label_);
+    mainLayout->addWidget(time_slider_);
+    mainLayout->addWidget(remaining_time_label_);
+    mainLayout->addWidget(mute_btn_);
+    mainLayout->addWidget(sound_slider_);
+
+    start_time_label_->setText("00:00");
+    remaining_time_label_->setText("00:00");
+
+    mute_btn_->setFlat(true);
+    mute_btn_->setFixedSize(30,30);
+    mute_btn_->setIcon(QIcon(":/imgs/sound.ico"));
+    mute_btn_->setIconSize(QSize(25,25));
+
+    sound_slider_->setRange(0,100);
+    sound_slider_->setFixedWidth(60);
 }

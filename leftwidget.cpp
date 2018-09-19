@@ -1,43 +1,50 @@
 #include "leftwidget.h"
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 
 LeftWidget::LeftWidget(QWidget *parent) : QWidget(parent)
 {
-    titleLabel = new QLabel;
-    titleLabel->setText("荔枝FM");
-    controlWidget = new QWidget;
-    controlWidget->setObjectName("controlWidget");
-//    controlWidget->setStyleSheet("QWidget#controlWidget{border: 1px solid #BFBFBF; border-radius: 5px;}");
-    preBtn = new QPushButton;
-    preBtn->setFixedSize(46,46);
-    preBtn->setIcon(QIcon(":/imgs/pre.ico"));
-    preBtn->setIconSize(QSize(30,30));
-    preBtn->setFlat(true);
-    preBtn->setToolTip("上一曲");
-    pauseBtn = new QPushButton;
-    pauseBtn->setFixedSize(46,46);
-    pauseBtn->setIcon(QIcon(":/imgs/play.ico"));
-    pauseBtn->setIconSize(QSize(40,40));
-    pauseBtn->setFlat(true);
-    pauseBtn->setToolTip("暂停");
-    nextBtn = new QPushButton;
-    nextBtn->setFixedSize(46,46);
-    nextBtn->setIcon(QIcon(":/imgs/next.ico"));
-    nextBtn->setIconSize(QSize(30,30));
-    nextBtn->setFlat(true);
-    nextBtn->setToolTip("下一曲");
-    listWidget = new QListWidget;
-    listWidget->addItem("列表为空！");
+    this->setFixedWidth(230);
 
-    mainLayout = new QVBoxLayout(this);
-    controlLayout = new QHBoxLayout(controlWidget);
+    control_widget_ = new QWidget;
+    previous_btn_ = new QPushButton;
+    play_btn_ = new QPushButton;
+    next_btn_ = new QPushButton;
+    list_wigdet_ = new QListWidget;
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    QHBoxLayout *controlLayout = new QHBoxLayout(control_widget_);
 
     mainLayout->setMargin(0);
+    mainLayout->setSpacing(0);
 
-    mainLayout->addWidget(titleLabel);
-    mainLayout->addWidget(controlWidget);
-    mainLayout->addWidget(listWidget);
+    mainLayout->addWidget(control_widget_);
+    mainLayout->addWidget(list_wigdet_);
 
-    controlLayout->addWidget(preBtn);
-    controlLayout->addWidget(pauseBtn);
-    controlLayout->addWidget(nextBtn);
+    controlLayout->setMargin(0);
+    controlLayout->setSpacing(0);
+
+    controlLayout->addWidget(previous_btn_);
+    controlLayout->addWidget(play_btn_);
+    controlLayout->addWidget(next_btn_);
+
+    const QSize ICON_SIZE(30,30);
+    const QSize BTN_SIZE(46,46);
+
+    previous_btn_->setFlat(true);
+    previous_btn_->setIcon(QIcon(":/imgs/pre.ico"));
+    previous_btn_->setIconSize(ICON_SIZE);
+    previous_btn_->setFixedSize(BTN_SIZE);
+
+    play_btn_->setFlat(true);
+    play_btn_->setIcon(QIcon(":/imgs/play.ico"));
+    play_btn_->setIconSize(ICON_SIZE);
+    play_btn_->setFixedSize(BTN_SIZE);
+
+    next_btn_->setFlat(true);
+    next_btn_->setIcon(QIcon(":/imgs/next.ico"));
+    next_btn_->setIconSize(ICON_SIZE);
+    next_btn_->setFixedSize(BTN_SIZE);
+
+    list_wigdet_->addItem("当前列表为空！");
 }

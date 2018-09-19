@@ -2,11 +2,8 @@
 #define LEFTWIDGET_H
 
 #include <QWidget>
-#include <QPushButton>
-#include <QLabel>
 #include <QListWidget>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
+#include <QPushButton>
 
 class LeftWidget : public QWidget
 {
@@ -14,14 +11,12 @@ class LeftWidget : public QWidget
 public:
     explicit LeftWidget(QWidget *parent = nullptr);
 
-    QLabel *titleLabel;
-    QWidget *controlWidget;
-    QPushButton *preBtn;
-    QPushButton *pauseBtn;
-    QPushButton *nextBtn;
-    QListWidget *listWidget;
-    QVBoxLayout *mainLayout;
-    QHBoxLayout *controlLayout;
+public:
+    QWidget *control_widget_;                           //控制界面
+    QPushButton *previous_btn_;                         //上一曲
+    QPushButton *next_btn_;                             //下一曲
+    QPushButton *play_btn_;                             //播放按钮
+    QListWidget *list_wigdet_;                           //音乐列表
 
 signals:
 

@@ -1,31 +1,30 @@
-#include "mtabwidget.h"
-#include <QDebug>
+#include "tabwidget.h"
 #include <QPainter>
 #include <QTabBar>
 #include <QRect>
 #include <QToolTip>
+#include <QDebug>
 
 #define size 32     //自定义图标大小
 
-MTabWidget::MTabWidget(QWidget *parent)
-    :QTabWidget(parent)
+TabWidget::TabWidget(QWidget *parent) : QTabWidget(parent)
 {
-    QSize pixSize(size,size);
+    const QSize PIX_SIZE(size,size);
     skin.load(":/imgs/skin.png");
-    skin = skin.scaled(pixSize);
+    skin = skin.scaled(PIX_SIZE);
     github.load(":/imgs/github.png");
-    github = github.scaled(pixSize);
+    github = github.scaled(PIX_SIZE);
     setting.load(":/imgs/setting.png");
-    setting = setting.scaled(pixSize);
+    setting = setting.scaled(PIX_SIZE);
     donate.load(":/imgs/donate.png");
-    donate = donate.scaled(pixSize);
+    donate = donate.scaled(PIX_SIZE);
     about.load(":/imgs/about.png");
-    about = about.scaled(pixSize);
+    about = about.scaled(PIX_SIZE);
 
     this->setMouseTracking(true);
 }
 
-void MTabWidget::paintEvent(QPaintEvent *event)         //绘制自定义按钮
+void TabWidget::paintEvent(QPaintEvent *event)         //绘制自定义按钮
 {
     QPainter painter(this);
     painter.drawPixmap(width()-size*5-30,0,size,size,skin);
@@ -36,7 +35,7 @@ void MTabWidget::paintEvent(QPaintEvent *event)         //绘制自定义按钮
     QTabWidget::paintEvent(event);
 }
 
-void MTabWidget::mousePressEvent(QMouseEvent *event)        //鼠标按下检测
+void TabWidget::mousePressEvent(QMouseEvent *event)        //鼠标按下检测
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -77,7 +76,7 @@ void MTabWidget::mousePressEvent(QMouseEvent *event)        //鼠标按下检测
     QTabWidget::mousePressEvent(event);
 }
 
-void MTabWidget::mouseMoveEvent(QMouseEvent *event)     //鼠标移动操作
+void TabWidget::mouseMoveEvent(QMouseEvent *event)     //鼠标移动操作
 {
     if (event->pos().y() >=  0 && event->pos().y() <= tabBar()->height() - 6)
     {

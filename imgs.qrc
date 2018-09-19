@@ -1,31 +1,25 @@
 <RCC>
     <qresource prefix="/">
+        <file>imgs/5-121204193R0-50.gif</file>
+        <file>imgs/about.png</file>
+        <file>imgs/alipay.jpg</file>
+        <file>imgs/back.ico</file>
+        <file>imgs/background_3.jpg</file>
+        <file>imgs/donate_alipay.jpg</file>
+        <file>imgs/donate_wechat.jpg</file>
+        <file>imgs/donate.png</file>
+        <file>imgs/github.png</file>
         <file>imgs/lizhi_favicon.ico</file>
+        <file>imgs/mute.ico</file>
         <file>imgs/next.ico</file>
         <file>imgs/noImg.jpg</file>
         <file>imgs/pause.ico</file>
         <file>imgs/play.ico</file>
         <file>imgs/pre.ico</file>
         <file>imgs/round.jpg</file>
-        <file>imgs/start.gif</file>
-        <file>imgs/background_3.jpg</file>
-        <file>imgs/back.ico</file>
-        <file>imgs/github.png</file>
-        <file>imgs/skin.png</file>
         <file>imgs/setting.png</file>
-        <file>imgs/about.png</file>
-        <file>imgs/donate.png</file>
-        <file>qss/style.qss</file>
-        <file>imgs/alipay.jpg</file>
-        <file>imgs/donate_alipay.jpg</file>
-        <file>imgs/donate_wechat.jpg</file>
-        <file>background/background_1.jpg</file>
-        <file>background/background_2.jpg</file>
-        <file>background/background_3.jpg</file>
-        <file>background/background_4.jpg</file>
-        <file>background/background_5.jpg</file>
-        <file>background/background_6.jpg</file>
-        <file>background/background_7.jpg</file>
-        <file>background/background_8.jpg</file>
+        <file>imgs/skin.png</file>
+        <file>imgs/sound.ico</file>
+        <file>imgs/start.gif</file>
     </qresource>
 </RCC>

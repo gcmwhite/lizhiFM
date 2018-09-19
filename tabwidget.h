@@ -1,22 +1,23 @@
-#ifndef MTABWIDGET_H
-#define MTABWIDGET_H
+#ifndef TABWIDGET_H
+#define TABWIDGET_H
 
-#include <QWidget>
 #include <QTabWidget>
 #include <QPaintEvent>
 #include <QPixmap>
 #include <QMouseEvent>
 
-class MTabWidget : public QTabWidget
+class TabWidget : public QTabWidget
 {
     Q_OBJECT
 public:
-    explicit MTabWidget(QWidget *parent=nullptr);
+    explicit TabWidget(QWidget *parent = nullptr);
+
+private:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
 
-private:
+public:
     QPixmap skin;
     QPixmap github;
     QPixmap setting;
@@ -29,6 +30,8 @@ signals:
     void settingClicked();
     void donateClicked();
     void aboutClicked();
+
+public slots:
 };
 
-#endif // MTABWIDGET_H
+#endif // TABWIDGET_H

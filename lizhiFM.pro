@@ -8,7 +8,7 @@ QT       += core gui network multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = lizhiFM_7
+TARGET = lizhiFM
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -23,30 +23,29 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-SOURCES += \
-        main.cpp \
-        mainwidget.cpp \
-    leftwidget.cpp \
-    footwidget.cpp \
-    listwidget.cpp \
-    lizhifmhttp.cpp \
-    mtabwidget.cpp \
-    aboutwidget.cpp \
-    donatewidget.cpp \
-    skinwidget.cpp
+RESOURCES += \
+    imgs.qrc \
+    qss.qrc
 
 HEADERS += \
-        mainwidget.h \
-    leftwidget.h \
-    footwidget.h \
-    listwidget.h \
-    lizhifmhttp.h \
-    mtabwidget.h \
+    mainwidget.h \
     aboutwidget.h \
     donatewidget.h \
-    skinwidget.h
+    footwidget.h \
+    leftwidget.h \
+    tabwidget.h \
+    lizhiapi.h \
+    gridbtnwidget.h \
+    radiotype.h
 
-RESOURCES += \
-    imgs.qrc
-
-DISTFILES +=
+SOURCES += \
+    mainwidget.cpp \
+    aboutwidget.cpp \
+    donatewidget.cpp \
+    footwidget.cpp \
+    leftwidget.cpp \
+    tabwidget.cpp \
+    main.cpp \
+    lizhiapi.cpp \
+    gridbtnwidget.cpp \
+    radiotype.cpp
