@@ -5,12 +5,7 @@
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
     init_ui_();
-    QTimer *timer_ = new QTimer(this);
-    connect(timer_,&QTimer::timeout,this,[=](){
-        timer_->stop();
-        init_network_();
-    });
-    timer_->start(10);
+    init_network_();
 }
 
 //主界面初始化
@@ -51,10 +46,27 @@ void MainWidget::init_ui_()
 void MainWidget::init_network_()
 {
     lizhiAPI = new LiZhiAPI(this);
-    radioType->setRadioType(lizhiAPI->get_radio_type());                                        //获取节目类别
-    hot_grid_widget->set_grid_btn_widget(lizhiAPI->get_hot_grid());                             //获取热门电台
-    optimization_grid_widget->set_grid_btn_widget(lizhiAPI->get_optimization_grid());           //获取优选电台
 
+    QTimer *timer = new QTimer(this);
+    connect(timer,&QTimer::timeout,this,[=](){
+        static int timer_count = 0;
+        if (timer_count == 0)
+        {
+            radioType->setRadioType(lizhiAPI->get_radio_type());                                        //获取节目类别
+        }else if (timer_count == 1) {
+            hot_grid_widget->set_grid_btn_widget(lizhiAPI->get_hot_grid());                             //获取热门电台
+            timer->setInterval(500);
+        }else if (timer_count == 2)
+        {
+            optimization_grid_widget->set_grid_btn_widget(lizhiAPI->get_optimization_grid());           //获取优选电台
+            timer->stop();
+            timer->disconnect();
+            timer->setParent(nullptr);
+            timer->deleteLater();
+        }
+        timer_count++;
+    });
+    timer->start(100);
 
     musicListWidget = new MusicListWidget;
     stackedLayout->addWidget(musicListWidget);
