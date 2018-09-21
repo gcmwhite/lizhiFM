@@ -169,8 +169,14 @@ QVector<QStringList> LiZhiAPI::get_tag_info_list(const QString &path)
     rx.indexIn(data);
     QStringList list;
     list << rx.cap(0).mid(18);
-    rx.setPattern(">下一页<");
+    rx.setPattern("<a href=\"(\\./|\\d*.html)(?=(\" class=\"prev\">))");
     rx.indexIn(data);
+    list << rx.cap(0).mid(9);
+    rx.setPattern("<a href=\"\\d*.html(?=(\" class=\"next\">))");
+    rx.indexIn(data);
+    list << rx.cap(0).mid(9);
+    rx.setPattern("/tag/\\d*/");
+    rx.indexIn(path);
     list << rx.cap(0);
     vec_list.append(list);
 

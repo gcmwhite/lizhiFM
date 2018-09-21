@@ -26,10 +26,9 @@ private:
 
     QVBoxLayout *mainLayout;
 
-    int index = 1;
-
 signals:
     void back_btn_clicked_signal();
+    void tag_page_changed(const QString &);
 
 public slots:
 };

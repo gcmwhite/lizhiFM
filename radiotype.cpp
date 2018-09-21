@@ -18,7 +18,6 @@ void RadioType::setRadioType(const QVector<QStringList> &vec_list)
         QPushButton *btn = new QPushButton(QString(list.at(1)));
         btn->setCursor(Qt::PointingHandCursor);
         connect(btn,&QPushButton::clicked,[=](){
-            qDebug() << "btn_clicked:" << list.at(0);
             radio_type_btn_clicked_signal(list.at(0));
         });
         mainLayout->addWidget(btn,i/5,i%5);

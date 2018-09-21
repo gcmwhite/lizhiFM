@@ -112,4 +112,10 @@ void MainWidget::init_network_()
     connect(musicListWidget,&MusicListWidget::page_changed_signal,this,[=](const QString &path){
         musicListWidget->set_music_list_widget(lizhiAPI->get_music_list(path));
     });
+
+    //绑定tag widget changed
+    connect(tagWidget,&TagWidget::tag_page_changed,this,[=](const QString &path){
+        tagWidget->set_tag_widget(lizhiAPI->get_tag_info_list(path));
+//        stackedLayout->setCurrentWidget(tagWidget);
+    });
 }

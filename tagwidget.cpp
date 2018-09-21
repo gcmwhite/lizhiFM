@@ -1,5 +1,7 @@
 #include "tagwidget.h"
 #include <QHBoxLayout>
+#include <QRegExp>
+#include <QDebug>
 
 TagWidget::TagWidget(QWidget *parent) : QWidget(parent)
 {
@@ -15,7 +17,6 @@ TagWidget::TagWidget(QWidget *parent) : QWidget(parent)
     mainLayout = new QVBoxLayout(this);
 
     index_label->setAlignment(Qt::AlignCenter);
-    index_label->setText("地 1 页");
     title_label->setAlignment(Qt::AlignCenter);
 
     const QSize _M_SIZE(25,25);
@@ -65,19 +66,58 @@ TagWidget::TagWidget(QWidget *parent) : QWidget(parent)
     connect(back_btn,&QPushButton::clicked,this,[=](){
         emit back_btn_clicked_signal();
     });
+
 }
 
 void TagWidget::set_tag_widget(const QVector<QStringList> &vec_list)
 {
+    previous_page_btn->disconnect();
+    next_page_btn->disconnect();
+
     QVector<QStringList> temp_vec_list = vec_list;
 
-    QStringList list = temp_vec_list.at(0);
+    const QStringList list = temp_vec_list.at(0);
     title_label->setText(QString("<h2>%1</h2>").arg(list.at(0)));
+
+    const QString previous = list.at(1);
+    const QString next = list.at(2);
+    const QString url = list.at(3);
+
+    QRegExp rx("\\d*(?=.html)");
+    rx.setMinimal(true);
+    rx.indexIn(next);
+    const int index = rx.cap(0).toInt() - 1;
+    index_label->setText(QString("第 %1 页").arg(index));
 
     //删除控件
     gridBtnWidget->clear_children();
 
     temp_vec_list.pop_front();
     gridBtnWidget->set_grid_btn_widget(temp_vec_list);
+
+    connect(previous_page_btn,&QPushButton::clicked,this,[=](){
+        next_page_btn->setEnabled(true);
+        if (previous.isEmpty())
+        {
+            previous_page_btn->setEnabled(false);
+        } else {
+            previous_page_btn->setEnabled(true);
+            if (previous == "./")
+                emit tag_page_changed(url);
+            else
+                emit tag_page_changed(url + previous);
+        }
+    });
+
+    connect(next_page_btn,&QPushButton::clicked,this,[=](){
+        previous_page_btn->setEnabled(true);
+        if (next.isEmpty())
+        {
+            next_page_btn->setEnabled(false);
+        } else {
+            next_page_btn->setEnabled(true);
+            emit tag_page_changed(url + next);
+        }
+    });
 
 }
