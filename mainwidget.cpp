@@ -66,7 +66,7 @@ void MainWidget::init_network_()
         }
         timer_count++;
     });
-    timer->start(100);
+    timer->start(50);
 
     musicListWidget = new MusicListWidget;
     stackedLayout->addWidget(musicListWidget);
@@ -106,5 +106,10 @@ void MainWidget::init_network_()
     //返回tabWidget
     connect(tagWidget,&TagWidget::back_btn_clicked_signal,this,[=](){
         stackedLayout->setCurrentWidget(tabWidget);
+    });
+
+    //绑定music list page changed
+    connect(musicListWidget,&MusicListWidget::page_changed_signal,this,[=](const QString &path){
+        musicListWidget->set_music_list_widget(lizhiAPI->get_music_list(path));
     });
 }

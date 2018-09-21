@@ -22,15 +22,17 @@ public:
 private:
     QVBoxLayout *mainLayout;
     QStandardItemModel *head;
-    int index_page = 1;
     QPushButton *back_btn;
     QLabel *title_label;
     QPushButton *previous_btn;
     QPushButton *next_btn;
     QLabel *page_label;
 
+
 signals:
     void back_btn_clicked_signal();
+    void page_changed_signal(const QString &);
+
 
 public slots:
 };

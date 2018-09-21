@@ -4,6 +4,7 @@
 #include <QAbstractItemView>
 #include <QHeaderView>
 #include <QDebug>
+#include <QRegExp>
 
 MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
 {
@@ -53,7 +54,6 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     hboxLayout_2->addWidget(page_label);
     hboxLayout_2->addWidget(next_btn);
 
-    page_label->setText("第 1 页");
     page_label->setAlignment(Qt::AlignCenter);
 
     previous_btn->setFlat(true);
@@ -91,7 +91,15 @@ void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list
 
     title_label->setText(QString("<h2>%1</h2>").arg(vec_list.at(0).at(0)));
 
-    QString next = vec_list.at(0).at(1);
+    const QString previous = vec_list.at(0).at(1);
+    const QString next = vec_list.at(0).at(2);
+
+    QRegExp rx("/\\d*(?=.html)");
+    rx.setMinimal(true);
+    rx.indexIn(next);
+    const QString page = rx.cap(0).mid(1);
+    const int index = page.toInt() - 1;
+    page_label->setText(QString("第 %1 页").arg(index));
 
     int size = vec_list.size();
     for (int i = 1;i < size;i++)
@@ -106,35 +114,27 @@ void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list
 
     //上一页
     connect(previous_btn,&QPushButton::clicked,this,[=](){
-        if (index_page <= 2)
+        next_btn->setEnabled(true);
+        if (previous.isEmpty())
         {
             previous_btn->setEnabled(false);
+        } else {
+
+            previous_btn->setEnabled(true);
+            emit page_changed_signal(previous);
         }
-        else
-        {
-            page_label->setText(QString("第 %1 页").arg(--index_page));
-        }
-        if (next.contains(">下一页<"))
-        {
-            next_btn->setEnabled(true);
-        }
-        qDebug() << "上一页";
     });
 
     //下一页
     connect(next_btn,&QPushButton::clicked,this,[=](){
-        if (next.contains(">下一页<"))
-        {
-            page_label->setText(QString("第 %1 页").arg(++index_page));
-        } else
+        previous_btn->setEnabled(true);
+        if (next.isEmpty())
         {
             next_btn->setEnabled(false);
+        } else {
+            next_btn->setEnabled(true);
+            emit page_changed_signal(next);
         }
-        if (index_page > 1)
-        {
-            previous_btn->setEnabled(true);
-        }
-        qDebug() << "下一页";
     });
 
 }

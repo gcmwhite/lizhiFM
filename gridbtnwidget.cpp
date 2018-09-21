@@ -83,7 +83,7 @@ void GridBtnWidget::set_grid_btn_widget(const QVector<QStringList> &vec_list)
 
         connect(btn,&QPushButton::clicked,[=](){
             grid_btn_signal(QString(list.at(0)));
-            qDebug() << list.at(0);
+//            qDebug() << list.at(0);
         });
     }
 

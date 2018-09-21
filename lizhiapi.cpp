@@ -120,9 +120,12 @@ QVector<QStringList> LiZhiAPI::get_music_list(const QString &path)
     rx.indexIn(data);
     QStringList list;
     list << rx.cap(0).mid(27);
-    rx.setPattern(">下一页<");
+    rx.setPattern("<a href=\"/user/\\d*/(|p/\\d*.html)(?=(\" class=\"prev\">))");
     rx.indexIn(data);
-    list << rx.cap(0);
+    list << rx.cap(0).mid(15);
+    rx.setPattern("<a href=\"/user/\\d*/p/\\d*.html(?=(\" class=\"next\">))");
+    rx.indexIn(data);
+    list << rx.cap(0).mid(15);
     vec_list.append(list);
     rx.setPattern("<ul class=\"audioList fontYaHei js.*</ul>");
     rx.indexIn(data);
