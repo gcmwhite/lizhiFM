@@ -14,6 +14,7 @@ public:
     explicit GridBtnWidget(QWidget *parent = nullptr);
     QPixmap pixmapToRound(const QPixmap &,int);
     void set_grid_btn_widget(const QVector<QStringList> &);
+    void clear_children();
 
 private:
     QGridLayout *mainLayout;

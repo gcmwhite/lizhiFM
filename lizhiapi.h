@@ -16,6 +16,7 @@ public:
     QVector<QStringList> get_hot_grid();
     QVector<QStringList> get_optimization_grid();
     QVector<QStringList> get_music_list(const QString &);
+    QVector<QStringList> get_tag_info_list(const QString &);
 
 private:
     QVector<QStringList> get_radio_list(const QString &);

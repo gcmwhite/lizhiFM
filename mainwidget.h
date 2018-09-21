@@ -8,6 +8,7 @@
 #include "radiotype.h"
 #include "lizhiapi.h"
 #include "musiclistwidget.h"
+#include "tagwidget.h"
 #include <QWidget>
 #include <QGridLayout>
 #include <QStackedLayout>
@@ -31,6 +32,7 @@ private:
     LiZhiAPI *lizhiAPI;
     MusicListWidget *musicListWidget;
     QStackedLayout *stackedLayout;
+    TagWidget *tagWidget;
 
 signals:
 

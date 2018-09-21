@@ -151,3 +151,50 @@ QVector<QStringList> LiZhiAPI::get_music_list(const QString &path)
     }
     return vec_list;
 }
+
+//获取tag内容
+QVector<QStringList> LiZhiAPI::get_tag_info_list(const QString &path)
+{
+    const QString url = BaseUrl + path;
+    const QString data = _get_(url);
+
+    QVector<QStringList> vec_list;
+    vec_list.reserve(21);
+
+    QRegExp rx("<a href=\"/\">发现</a>.*(?=(</div>))");
+    rx.setMinimal(true);
+    rx.indexIn(data);
+    QStringList list;
+    list << rx.cap(0).mid(18);
+    rx.setPattern(">下一页<");
+    rx.indexIn(data);
+    list << rx.cap(0);
+    vec_list.append(list);
+
+    rx.setPattern("<p class=\"radio-last-audio.*>");
+    int pos = 0;
+    while ((pos = rx.indexIn(data,pos)) != -1)
+    {
+        const QString temp = rx.cap(0);
+        QStringList list;
+        QRegExp t_rx("data-uid=\".*(?=\")");
+        t_rx.setMinimal(true);
+        t_rx.indexIn(temp);
+        list << t_rx.cap(0).mid(10);
+        t_rx.setPattern("data-user-name=\".*(?=\")");
+        t_rx.indexIn(temp);
+        list << t_rx.cap(0).mid(16);
+        t_rx.setPattern("data-radio-name=\".*(?=\")");
+        t_rx.indexIn(temp);
+        list << t_rx.cap(0).mid(17);
+        t_rx.setPattern("data-title=\".*(?=\")");
+        t_rx.indexIn(temp);
+        list << t_rx.cap(0).mid(12);
+        t_rx.setPattern("data-cover=\".*(?=\")");
+        t_rx.indexIn(temp);
+        list << t_rx.cap(0).mid(12);
+        vec_list.append(list);
+        pos += rx.matchedLength();
+    }
+    return vec_list;
+}

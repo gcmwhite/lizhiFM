@@ -8,6 +8,8 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QVBoxLayout>
+#include <QObjectList>
+#include <QDebug>
 
 GridBtnWidget::GridBtnWidget(QWidget *parent) : QWidget(parent)
 {
@@ -85,4 +87,15 @@ void GridBtnWidget::set_grid_btn_widget(const QVector<QStringList> &vec_list)
         });
     }
 
+}
+
+//删除子控件
+void GridBtnWidget::clear_children()
+{
+    while (mainLayout->count()) {
+        QWidget *p = mainLayout->itemAt(0)->widget();
+        p->setParent(nullptr);
+        mainLayout->removeWidget(p);
+        delete p;
+    }
 }

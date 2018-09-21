@@ -11,8 +11,10 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     mainLayout->setMargin(0);
     QStringList list;
     list << "名称" << "时间" << "时长";
+
     head = new QStandardItemModel;
     head->setHorizontalHeaderLabels(list);
+
     view = new QTableView;
     view->setModel(head);
     view->setAlternatingRowColors(true);
@@ -21,7 +23,7 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     view->setEditTriggers(QAbstractItemView::NoEditTriggers);
     view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    const QSize _SIZE_(25,25);
+    const QSize _M_SIZE_(25,25);
 
     back_btn = new QPushButton;
     title_label = new QLabel;
@@ -32,10 +34,11 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     hboxLayout_1->addWidget(title_label);
 
     back_btn->setFlat(true);
+    back_btn->setCursor(Qt::PointingHandCursor);
     back_btn->setToolTip("返回");
-    back_btn->setFixedSize(_SIZE_);
+    back_btn->setFixedSize(_M_SIZE_);
     back_btn->setIcon(QIcon(":/imgs/back_.ico"));
-    back_btn->setIconSize(_SIZE_);
+    back_btn->setIconSize(_M_SIZE_);
 
     title_label->setAlignment(Qt::AlignCenter);
 
@@ -54,17 +57,19 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     page_label->setAlignment(Qt::AlignCenter);
 
     previous_btn->setFlat(true);
+    previous_btn->setCursor(Qt::PointingHandCursor);
     previous_btn->setToolTip("上一页");
     previous_btn->setEnabled(false);
-    previous_btn->setFixedSize(_SIZE_);
+    previous_btn->setFixedSize(_M_SIZE_);
     previous_btn->setIcon(QIcon(":/imgs/previous_page.ico"));
-    previous_btn->setIconSize(_SIZE_);
+    previous_btn->setIconSize(_M_SIZE_);
 
     next_btn->setFlat(true);
+    next_btn->setCursor(Qt::PointingHandCursor);
     next_btn->setToolTip("下一页");
-    next_btn->setFixedSize(_SIZE_);
+    next_btn->setFixedSize(_M_SIZE_);
     next_btn->setIcon(QIcon(":/imgs/next_page.ico"));
-    next_btn->setIconSize(_SIZE_);
+    next_btn->setIconSize(_M_SIZE_);
 
     mainLayout->addLayout(hboxLayout_1,1);
     mainLayout->addWidget(view,8);
