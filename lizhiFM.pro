@@ -38,7 +38,8 @@ HEADERS += \
     gridbtnwidget.h \
     radiotype.h \
     musiclistwidget.h \
-    tagwidget.h
+    tagwidget.h \
+    aplayer.h
 
 SOURCES += \
     mainwidget.cpp \
@@ -52,4 +53,5 @@ SOURCES += \
     gridbtnwidget.cpp \
     radiotype.cpp \
     musiclistwidget.cpp \
-    tagwidget.cpp
+    tagwidget.cpp \
+    aplayer.cpp

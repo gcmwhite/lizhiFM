@@ -152,6 +152,7 @@ QVector<QStringList> LiZhiAPI::get_music_list(const QString &path)
         vec_list.append(list);
         pos += rx.matchedLength();
     }
+//    qDebug() << "list:" << vec_list;
     return vec_list;
 }
 

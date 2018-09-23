@@ -6,6 +6,7 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
     init_ui_();
     init_network_();
+    init_a_player_();
 }
 
 //主界面初始化
@@ -119,3 +120,106 @@ void MainWidget::init_network_()
 //        stackedLayout->setCurrentWidget(tagWidget);
     });
 }
+
+//播放器初始化
+void MainWidget::init_a_player_()
+{
+    aplayer = new Aplayer();
+
+    //绑定右键菜单 添加到播放列表按钮
+    connect(musicListWidget,&MusicListWidget::add_play_list_signal,this,[=](const bool ok,const QVector<QStringList> &vec_list){
+        aplayer->add_play_list(ok,vec_list);
+        if (ok)
+        {
+            leftWidget->list_wigdet_->clear();
+        } else {
+            if (leftWidget->list_wigdet_->item(0)->text() == "当前列表为空！")
+            {
+                leftWidget->list_wigdet_->clear();
+            }
+        }
+        for (int i = 1;i < vec_list.size();i++)
+        {
+            QStringList list = vec_list.at(i);
+            leftWidget->list_wigdet_->addItem(list.at(1));
+        }
+    });
+
+    //进度条控制
+    static bool timeSliderPressFlag = false;
+    connect(footWidget->time_slider_,&QSlider::sliderPressed,this,[=](){
+        timeSliderPressFlag = true;
+    });
+
+    connect(footWidget->time_slider_,&QSlider::sliderReleased,this,[=](){
+        timeSliderPressFlag = false;
+    });
+
+    //进度条显示
+    connect(aplayer,&Aplayer::positionChanged,this,[=](qint64 position){
+        int currentT = int(position/1000);
+        int remainT = int((aplayer->duration()-position)/1000);
+        if (position == 0)
+        {
+            footWidget->time_slider_->setRange(0,int(aplayer->duration()/1000));
+        }
+        if (!timeSliderPressFlag)
+            footWidget->time_slider_->setValue(currentT);
+        footWidget->current_time_label_->setText(QString("%1:%2").arg(currentT/60,2,10,QLatin1Char('0'))
+                                    .arg(currentT%60,2,10,QLatin1Char('0')));
+        footWidget->remaining_time_label_->setText(QString("%1:%2").arg(remainT/60,2,10,QLatin1Char('0'))
+        .arg(remainT%60,2,10,QLatin1Char('0')));
+    });
+
+    //音量设置
+    connect(footWidget->sound_slider_,&QSlider::valueChanged,this,[=](int sound){
+        aplayer->setVolume(sound);
+    });
+
+    //播放器控制
+    connect(leftWidget->previous_btn_,&QPushButton::clicked,this,[=](){
+        aplayer->a_previous();
+    });
+
+    connect(leftWidget->play_btn_,&QPushButton::clicked,this,[=](){
+        aplayer->a_play();
+    });
+
+    connect(leftWidget->next_btn_,&QPushButton::clicked,this,[=](){
+        aplayer->a_next();
+    });
+
+    //歌名显示
+    static QString title;
+    connect(aplayer,&Aplayer::current_media_title_changed,this,[=](const QString &t_title){
+        title = t_title;
+    });
+
+    //播放按钮
+    connect(aplayer,&Aplayer::stateChanged,this,[=](QMediaPlayer::State newState){
+        switch (newState) {
+        case QMediaPlayer::PlayingState:
+            leftWidget->play_btn_->setIcon(QIcon(":/imgs/pause.ico"));
+            this->setWindowTitle(QString("荔枝FM 2.0 dev：%1").arg(title));
+            break;
+        case QMediaPlayer::PausedState:
+            leftWidget->play_btn_->setIcon(QIcon(":/icons/player_play.ico"));
+            this->setWindowTitle("荔枝FM 2.0 dev");
+        case QMediaPlayer::StoppedState:
+            leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
+            footWidget->time_slider_->setValue(0);
+            footWidget->current_time_label_->setText("00:00");
+            footWidget->remaining_time_label_->setText("00:00");
+            this->setWindowTitle("荔枝FM 2.0 dev");
+            break;
+        }
+    });
+
+    //当前播放位置
+    connect(aplayer,&Aplayer::current_media_index_changed,this,[=](int index){
+        qDebug() << "indexp:" << index;
+        leftWidget->list_wigdet_->setCurrentRow(index);
+    });
+
+}
+

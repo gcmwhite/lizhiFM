@@ -8,6 +8,8 @@
 #include <QVector>
 #include <QLabel>
 #include <QPushButton>
+#include <QContextMenuEvent>
+#include <QMenu>
 
 class MusicListWidget : public QWidget
 {
@@ -15,6 +17,9 @@ class MusicListWidget : public QWidget
 public:
     explicit MusicListWidget(QWidget *parent = nullptr);
     void set_music_list_widget(const QVector<QStringList> &);
+
+private:
+    void contextMenuEvent(QContextMenuEvent *);
 
 public:
     QTableView *view;
@@ -27,14 +32,24 @@ private:
     QPushButton *previous_btn;
     QPushButton *next_btn;
     QLabel *page_label;
+    QMenu *menu;
+    QMenu *add_play_list;
+    QAction *play_current_music;
+    QAction *add_play_list_not_clear;
+    QAction *add_play_list_clear;
+    QAction *add_play_list_selection;
+
 
 
 signals:
     void back_btn_clicked_signal();
     void page_changed_signal(const QString &);
+    void add_play_list_signal(const bool,const QVector<QStringList> &);
+    void play_current_music_signal(const QStringList &);
 
 
 public slots:
+
 };
 
 #endif // MUSICLISTWIDGET_H

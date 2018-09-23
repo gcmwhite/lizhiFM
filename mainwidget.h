@@ -9,6 +9,7 @@
 #include "lizhiapi.h"
 #include "musiclistwidget.h"
 #include "tagwidget.h"
+#include "aplayer.h"
 #include <QWidget>
 #include <QGridLayout>
 #include <QStackedLayout>
@@ -20,6 +21,7 @@ public:
     explicit MainWidget(QWidget *parent = nullptr);
     void init_ui_();
     void init_network_();
+    void init_a_player_();
 
 private:
     LeftWidget *leftWidget;
@@ -33,10 +35,13 @@ private:
     MusicListWidget *musicListWidget;
     QStackedLayout *stackedLayout;
     TagWidget *tagWidget;
+    Aplayer *aplayer;
 
 signals:
 
+
 public slots:
+
 };
 
 #endif // MAINWIDGET_H

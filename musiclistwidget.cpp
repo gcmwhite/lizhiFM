@@ -5,6 +5,8 @@
 #include <QHeaderView>
 #include <QDebug>
 #include <QRegExp>
+#include <QAction>
+#include <QDialog>
 
 MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
 {
@@ -79,6 +81,24 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     connect(back_btn,&QPushButton::clicked,this,[=](){
         emit back_btn_clicked_signal();
     });
+
+    //鼠标右键
+    menu = new QMenu(this);
+    add_play_list = new QMenu("添加到播放列表");
+    play_current_music = new QAction("播放当前音乐");
+
+    menu->addMenu(add_play_list);
+    menu->addAction(play_current_music);
+
+    add_play_list_not_clear = new QAction("全部添加");
+    add_play_list_clear = new QAction("全部添加&&清除原列表");
+    add_play_list_selection = new QAction("添加选中到播放列表");
+
+    add_play_list->addAction(add_play_list_not_clear);
+    add_play_list->addAction(add_play_list_clear);
+    add_play_list->addAction(add_play_list_selection);
+
+
 }
 
 void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list)
@@ -137,4 +157,36 @@ void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list
         }
     });
 
+    add_play_list_not_clear->disconnect();
+    add_play_list_clear->disconnect();
+    add_play_list_selection->disconnect();
+
+    //全部添加
+    connect(add_play_list_not_clear,&QAction::triggered,this,[=](){
+        emit add_play_list_signal(false,vec_list);
+    });
+
+    //添加并删除列表
+    connect(add_play_list_clear,&QAction::triggered,this,[=](){
+        emit add_play_list_signal(true,vec_list);
+    });
+
+    //添加选中列表
+    connect(add_play_list_selection,&QAction::triggered,this,[=](){
+        qDebug() << "添加选中列表";
+    });
+
+    //播放当前音乐
+    connect(play_current_music,&QAction::triggered,this,[=](){
+        qDebug() << "播放当前音乐";
+    });
+
 }
+
+void MusicListWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+    menu->move(QCursor::pos());
+    menu->exec();
+    event->accept();
+}
+
