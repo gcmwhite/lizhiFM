@@ -29,5 +29,5 @@ FootWidget::FootWidget(QWidget *parent) : QWidget(parent)
 
     sound_slider_->setRange(0,100);
     sound_slider_->setValue(100);
-    sound_slider_->setFixedWidth(60);
+    sound_slider_->setFixedWidth(80);
 }

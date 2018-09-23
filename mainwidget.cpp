@@ -152,6 +152,7 @@ void MainWidget::init_a_player_()
     });
 
     connect(footWidget->time_slider_,&QSlider::sliderReleased,this,[=](){
+        aplayer->setPosition(qint64(footWidget->time_slider_->value()*1000));
         timeSliderPressFlag = false;
     });
 
@@ -174,6 +175,25 @@ void MainWidget::init_a_player_()
     //音量设置
     connect(footWidget->sound_slider_,&QSlider::valueChanged,this,[=](int sound){
         aplayer->setVolume(sound);
+        if (sound <= 0)
+        {
+            footWidget->mute_btn_->setIcon(QIcon(":/imgs/mute.ico"));
+        } else {
+            footWidget->mute_btn_->setIcon(QIcon(":/imgs/sound.ico"));
+        }
+    });
+
+    //静音
+    connect(footWidget->mute_btn_,&QPushButton::clicked,this,[=](){
+        static bool mute_flag = false;
+        mute_flag = !mute_flag;
+        aplayer->setMuted(mute_flag);
+        if (mute_flag)
+        {
+            footWidget->mute_btn_->setIcon(QIcon(":/imgs/mute.ico"));
+        } else {
+            footWidget->mute_btn_->setIcon(QIcon(":/imgs/sound.ico"));
+        }
     });
 
     //播放器控制
@@ -217,7 +237,6 @@ void MainWidget::init_a_player_()
 
     //当前播放位置
     connect(aplayer,&Aplayer::current_media_index_changed,this,[=](int index){
-        qDebug() << "indexp:" << index;
         leftWidget->list_wigdet_->setCurrentRow(index);
     });
 

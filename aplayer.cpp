@@ -35,16 +35,18 @@ Aplayer::Aplayer(QObject *parent)
 //添加播放列表
 void Aplayer::add_play_list(const bool ok, QVector<QStringList> vec_list)
 {
+    vec_list.pop_front();
     if (ok)
     {
         index = 0;
         vec_play_list.clear();
+        vec_play_list.reserve(vec_list.size());
+        vec_play_list = vec_list;
+        a_play(index);
+    } else {
+        vec_play_list.reserve(vec_list.size() + vec_play_list.size());
+        vec_play_list += vec_list;
     }
-    vec_list.pop_front();
-    vec_play_list.reserve(vec_list.size());
-    vec_play_list.swap(vec_list);
-    a_play(index);
-//    qDebug() << "vec_p:" << vec_play_list;
 }
 
 //播放
