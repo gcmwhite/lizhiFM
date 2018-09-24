@@ -16,7 +16,7 @@ LeftWidget::LeftWidget(QWidget *parent) : QWidget(parent)
     QHBoxLayout *controlLayout = new QHBoxLayout(control_widget_);
 
     mainLayout->setMargin(0);
-    mainLayout->setSpacing(0);
+//    mainLayout->setSpacing(0);
 
     mainLayout->addWidget(control_widget_);
     mainLayout->addWidget(list_wigdet_);
@@ -24,6 +24,7 @@ LeftWidget::LeftWidget(QWidget *parent) : QWidget(parent)
     controlLayout->setMargin(0);
     controlLayout->setSpacing(0);
 
+    control_widget_->setObjectName("controlWidget");
     controlLayout->addWidget(previous_btn_);
     controlLayout->addWidget(play_btn_);
     controlLayout->addWidget(next_btn_);
