@@ -46,6 +46,8 @@ void Aplayer::add_play_list(const bool ok, QVector<QStringList> vec_list)
     } else {
         vec_play_list.reserve(vec_list.size() + vec_play_list.size());
         vec_play_list += vec_list;
+        if (index == 0)
+            a_play(index);
     }
 }
 
