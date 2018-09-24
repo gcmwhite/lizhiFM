@@ -5,18 +5,18 @@
 #include <QVBoxLayout>
 #include <QTableView>
 #include <QStandardItemModel>
-#include <QVector>
 #include <QLabel>
 #include <QPushButton>
 #include <QContextMenuEvent>
 #include <QMenu>
+#include <QJsonObject>
 
 class MusicListWidget : public QWidget
 {
     Q_OBJECT
 public:
     explicit MusicListWidget(QWidget *parent = nullptr);
-    void set_music_list_widget(const QVector<QStringList> &);
+    void set_music_list_widget(const QJsonObject &);
 
 private:
     void contextMenuEvent(QContextMenuEvent *);
@@ -44,7 +44,7 @@ private:
 signals:
     void back_btn_clicked_signal();
     void page_changed_signal(const QString &);
-    void add_play_list_signal(const bool,const QVector<QStringList> &);
+    void add_play_list_signal(const bool,const QJsonObject &);
     void play_current_music_signal(const QStringList &);
 
 

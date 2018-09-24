@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QLabel>
+#include <QJsonObject>
 #include <QVBoxLayout>
 
 class TagWidget : public QWidget
@@ -12,7 +13,7 @@ class TagWidget : public QWidget
     Q_OBJECT
 public:
     explicit TagWidget(QWidget *parent = nullptr);
-    void set_tag_widget(const QVector<QStringList> &);
+    void set_tag_widget(const QJsonObject &);
 
 public:
     GridBtnWidget *gridBtnWidget;

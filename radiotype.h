@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include <QGridLayout>
+#include <QJsonObject>
 
 class RadioType : public QWidget
 {
     Q_OBJECT
 public:
     explicit RadioType(QWidget *parent = nullptr);
-    void setRadioType(const QVector<QStringList> &);
+    void setRadioType(const QJsonObject &);
 
 private:
     QGridLayout *mainLayout;

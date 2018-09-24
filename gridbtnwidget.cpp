@@ -10,6 +10,7 @@
 #include <QVBoxLayout>
 #include <QObjectList>
 #include <QDebug>
+#include <QJsonArray>
 
 GridBtnWidget::GridBtnWidget(QWidget *parent) : QWidget(parent)
 {
@@ -42,14 +43,19 @@ QPixmap GridBtnWidget::pixmapToRound(const QPixmap &pix, int radius)
 }
 
 //按钮设置
-void GridBtnWidget::set_grid_btn_widget(const QVector<QStringList> &vec_list)
+void GridBtnWidget::set_grid_btn_widget(const QJsonObject &json)
 {
-    int size = vec_list.size();
-    for (int i = 0;i < size;i++)
+
+    QJsonArray js_array = json["list"].toArray();
+    for (int i = 0;i < js_array.size();i++)
     {
-        QStringList list = vec_list.at(i);
-        if (list.isEmpty())
-            continue;
+        const QJsonObject temp_json = js_array.at(i).toObject();
+        const QString data_radio_name = temp_json["data-radio-name"].toString();
+        const QString data_title = temp_json["data-title"].toString();
+        const QString data_user_name = temp_json["data-user-name"].toString();
+        const QString data_cover = temp_json["data-cover"].toString();
+        const QString data_uid = temp_json["data-uid"].toString();
+
         QPushButton *btn = new QPushButton;
         QLabel *img_label = new QLabel;
         QLabel *text_label = new QLabel;
@@ -60,16 +66,15 @@ void GridBtnWidget::set_grid_btn_widget(const QVector<QStringList> &vec_list)
 
         btn->setFlat(true);
         btn->setMinimumSize(100,100);
-        QString tool_tip = list.at(2) + "\n" + list.at(3);
+        QString tool_tip = data_radio_name + "\n" + data_title;
         btn->setToolTip(tool_tip);
         btn->setCursor(Qt::PointingHandCursor);
         img_label->setAlignment(Qt::AlignCenter);
         text_label->setAlignment(Qt::AlignCenter);
-        text_label->setText(QString(list.at(1)));
+        text_label->setText(data_user_name);
 
         QNetworkAccessManager *manager = new QNetworkAccessManager(this);
-        QString url = list.at(4);
-        request.setUrl(QUrl(url));
+        request.setUrl(QUrl(data_cover));
         connect(manager,&QNetworkAccessManager::finished,[=](QNetworkReply *reply){
             QPixmap pix;
             pix.loadFromData(reply->readAll());
@@ -82,8 +87,8 @@ void GridBtnWidget::set_grid_btn_widget(const QVector<QStringList> &vec_list)
         mainLayout->addWidget(btn,i/5,i%5);
 
         connect(btn,&QPushButton::clicked,[=](){
-            grid_btn_signal(QString(list.at(0)));
-//            qDebug() << list.at(0);
+            grid_btn_signal(data_uid);
+
         });
     }
 

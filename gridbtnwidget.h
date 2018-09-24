@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPixmap>
 #include <QGridLayout>
-#include <QVector>
+#include <QJsonObject>
 #include <QNetworkRequest>
 
 class GridBtnWidget : public QWidget
@@ -13,7 +13,7 @@ class GridBtnWidget : public QWidget
 public:
     explicit GridBtnWidget(QWidget *parent = nullptr);
     QPixmap pixmapToRound(const QPixmap &,int);
-    void set_grid_btn_widget(const QVector<QStringList> &);
+    void set_grid_btn_widget(const QJsonObject &);
     void clear_children();
 
 private:

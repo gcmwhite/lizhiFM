@@ -36,6 +36,7 @@ private:
     QStackedLayout *stackedLayout;
     TagWidget *tagWidget;
     Aplayer *aplayer;
+    QVector<QStringList> vec_play_list;
 
 signals:
 

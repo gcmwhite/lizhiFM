@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QRegExp>
 #include <QAction>
+#include <QJsonArray>
 #include <QDialog>
 
 MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
@@ -101,7 +102,7 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list)
+void MusicListWidget::set_music_list_widget(const QJsonObject &json)
 {
 
     head->removeRows(0,head->rowCount());
@@ -109,10 +110,10 @@ void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list
     previous_btn->disconnect();
     next_btn->disconnect();
 
-    title_label->setText(QString("<h2>%1</h2>").arg(vec_list.at(0).at(0)));
+    title_label->setText(QString("<h2>%1</h2>").arg(json["user-info-name"].toString()));
 
-    const QString previous = vec_list.at(0).at(1);
-    const QString next = vec_list.at(0).at(2);
+    const QString previous = json["prev"].toString();
+    const QString next = json["next"].toString();
 
     QRegExp rx("/\\d*(?=.html)");
     rx.setMinimal(true);
@@ -121,15 +122,18 @@ void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list
     const int index = page.toInt() - 1;
     page_label->setText(QString("第 %1 页").arg(index));
 
-    int size = vec_list.size();
-    for (int i = 1;i < size;i++)
+    const QJsonArray js_array = json["list"].toArray();
+    for (int i = 0;i < js_array.size();i++)
     {
-        QStringList list = vec_list.at(i);
-        if (list.isEmpty())
-            continue;
-        head->setItem(i-1,0,new QStandardItem(QString(list.at(1))));
-        head->setItem(i-1,1,new QStandardItem(QString(list.at(2))));
-        head->setItem(i-1,2,new QStandardItem(QString(list.at(3))));
+        QJsonObject temp_object = js_array.at(i).toObject();
+        const QString aduioTime = temp_object["aduioTime"].toString();
+        const QString audioName = temp_object["audioName"].toString();
+        const QString data_id = temp_object["data-id"].toString();
+        const QString right_duration = temp_object["right-duration"].toString();
+
+        head->setItem(i,0,new QStandardItem(audioName));
+        head->setItem(i,1,new QStandardItem(aduioTime));
+        head->setItem(i,2,new QStandardItem(right_duration));
     }
 
     //上一页
@@ -163,12 +167,12 @@ void MusicListWidget::set_music_list_widget(const QVector<QStringList> &vec_list
 
     //全部添加
     connect(add_play_list_not_clear,&QAction::triggered,this,[=](){
-        emit add_play_list_signal(false,vec_list);
+        emit add_play_list_signal(false,json);
     });
 
     //添加并删除列表
     connect(add_play_list_clear,&QAction::triggered,this,[=](){
-        emit add_play_list_signal(true,vec_list);
+        emit add_play_list_signal(true,json);
     });
 
     //添加选中列表

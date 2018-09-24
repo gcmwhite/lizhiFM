@@ -2,6 +2,7 @@
 #include <QHBoxLayout>
 #include <QRegExp>
 #include <QDebug>
+#include <QJsonArray>
 
 TagWidget::TagWidget(QWidget *parent) : QWidget(parent)
 {
@@ -69,19 +70,18 @@ TagWidget::TagWidget(QWidget *parent) : QWidget(parent)
 
 }
 
-void TagWidget::set_tag_widget(const QVector<QStringList> &vec_list)
+void TagWidget::set_tag_widget(const QJsonObject &json)
 {
     previous_page_btn->disconnect();
     next_page_btn->disconnect();
 
-    QVector<QStringList> temp_vec_list = vec_list;
+    const QString tag_name = json["tag-name"].toString();
 
-    const QStringList list = temp_vec_list.at(0);
-    title_label->setText(QString("<h2>%1</h2>").arg(list.at(0)));
+    title_label->setText(QString("<h2>%1</h2>").arg(tag_name));
 
-    const QString previous = list.at(1);
-    const QString next = list.at(2);
-    const QString url = list.at(3);
+    const QString previous = json["prev"].toString();
+    const QString next = json["next"].toString();
+    const QString path = json["path"].toString();
 
     QRegExp rx("\\d*(?=.html)");
     rx.setMinimal(true);
@@ -92,8 +92,7 @@ void TagWidget::set_tag_widget(const QVector<QStringList> &vec_list)
     //删除控件
     gridBtnWidget->clear_children();
 
-    temp_vec_list.pop_front();
-    gridBtnWidget->set_grid_btn_widget(temp_vec_list);
+    gridBtnWidget->set_grid_btn_widget(json);
 
     connect(previous_page_btn,&QPushButton::clicked,this,[=](){
         next_page_btn->setEnabled(true);
@@ -103,9 +102,9 @@ void TagWidget::set_tag_widget(const QVector<QStringList> &vec_list)
         } else {
             previous_page_btn->setEnabled(true);
             if (previous == "./")
-                emit tag_page_changed(url);
+                emit tag_page_changed(path);
             else
-                emit tag_page_changed(url + previous);
+                emit tag_page_changed(path + previous);
         }
     });
 
@@ -116,7 +115,7 @@ void TagWidget::set_tag_widget(const QVector<QStringList> &vec_list)
             next_page_btn->setEnabled(false);
         } else {
             next_page_btn->setEnabled(true);
-            emit tag_page_changed(url + next);
+            emit tag_page_changed(path + next);
         }
     });
 

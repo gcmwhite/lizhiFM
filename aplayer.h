@@ -5,13 +5,15 @@
 #include <QMediaPlayer>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QJsonObject>
+#include <QVector>
 
 class Aplayer : public QMediaPlayer
 {
     Q_OBJECT
 public:
     explicit Aplayer(QObject *parent = nullptr);
-    void add_play_list(const bool,QVector<QStringList> );
+    void add_play_list(const bool,const QVector<QStringList> &);
     void a_play();
     void a_play(int);
     void a_previous();

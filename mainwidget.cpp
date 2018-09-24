@@ -1,6 +1,8 @@
 #include "mainwidget.h"
 #include "QGridLayout"
 #include <QTimer>
+#include <QJsonObject>
+#include <QJsonArray>
 
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
@@ -145,22 +147,31 @@ void MainWidget::init_a_player_()
     aplayer = new Aplayer();
 
     //绑定右键菜单 添加到播放列表按钮
-    connect(musicListWidget,&MusicListWidget::add_play_list_signal,this,[=](const bool ok,const QVector<QStringList> &vec_list){
-        aplayer->add_play_list(ok,vec_list);
+    connect(musicListWidget,&MusicListWidget::add_play_list_signal,this,[=](const bool ok,const QJsonObject &json){
+        QJsonArray js_array = json["list"].toArray();
+        int size = js_array.size();
         if (ok)
         {
+            vec_play_list.clear();
             leftWidget->list_wigdet_->clear();
+            vec_play_list.reserve(size);
         } else {
             if (leftWidget->list_wigdet_->item(0)->text() == "当前列表为空！")
-            {
                 leftWidget->list_wigdet_->clear();
-            }
+            vec_play_list.reserve(vec_play_list.size() + size);
         }
-        for (int i = 1;i < vec_list.size();i++)
+        for (int i = 0;i < size;i++)
         {
-            QStringList list = vec_list.at(i);
-            leftWidget->list_wigdet_->addItem(list.at(1));
+            QStringList list;
+            const QJsonObject temp_json = js_array.at(i).toObject();
+            const QString audioName = temp_json["audioName"].toString();
+            list << temp_json["data-id"].toString();
+            list << audioName;
+            leftWidget->list_wigdet_->addItem(audioName);
+            vec_play_list.append(list);
         }
+        aplayer->add_play_list(ok,vec_play_list);
+
     });
 
     //进度条控制
@@ -170,8 +181,12 @@ void MainWidget::init_a_player_()
     });
 
     connect(footWidget->time_slider_,&QSlider::sliderReleased,this,[=](){
-        aplayer->setPosition(qint64(footWidget->time_slider_->value()*1000));
-        timeSliderPressFlag = false;
+        qDebug() << "timeSliderPressFlag:" <<  timeSliderPressFlag;
+        if (timeSliderPressFlag)
+        {
+            aplayer->setPosition(qint64(footWidget->time_slider_->value()*1000));
+            timeSliderPressFlag = false;
+        }
     });
 
     //进度条显示

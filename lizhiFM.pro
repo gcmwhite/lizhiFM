@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui network multimedia
+QT       += core gui network multimedia sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -39,7 +39,8 @@ HEADERS += \
     radiotype.h \
     musiclistwidget.h \
     tagwidget.h \
-    aplayer.h
+    aplayer.h \
+#    config.h
 
 SOURCES += \
     mainwidget.cpp \
@@ -54,4 +55,5 @@ SOURCES += \
     radiotype.cpp \
     musiclistwidget.cpp \
     tagwidget.cpp \
-    aplayer.cpp
+    aplayer.cpp \
+#    config.cpp
