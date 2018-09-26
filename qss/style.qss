@@ -19,6 +19,40 @@ QWidget#controlWidget{border: 1px solid #BFBFBF; border-radius: 5px;}
 /*滚动条*/
 QScrollBar{background:transparent;}
 
+/*表头*/
+
+QHeaderView{
+        border: none;
+        background: transparent;
+}
+QHeaderView::section:horizontal {
+        border: none;
+        background: transparent;
+}
+QHeaderView::section:horizontal:hover {
+        background: transparent;
+}
+QHeaderView::section:horizontal:pressed {
+        background: transparent;
+}
+
+QHeaderView::section:vertical {
+        border: none;
+        background: transparent;
+}
+QHeaderView::section:vertical:hover {
+        background: transparent;
+}
+QHeaderView::section:vertical:pressed {
+        background: transparent;
+}
+
+
+/*表格*/
+QTableView{background:transparent; border:1px solid gray;}
+QTableView::item{border:1px solid gray;}
+QTableView QTableCornerButton::section{background:transparent;border:none;}
+
 /*Tab页面*/
 QTabWidget::pane {border:1px solid #BFBFBF;border-radius: 5px;background:transparent; }
 

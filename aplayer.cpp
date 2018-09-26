@@ -47,7 +47,6 @@ void Aplayer::add_play_list(const bool ok,const QVector<QStringList> &vec_list)
         if (this->state() != QMediaPlayer::PlayingState)
             a_play(index);
     }
-    qDebug() << "vec:" << vec_play_list;
 }
 
 
@@ -74,7 +73,6 @@ void Aplayer::a_previous()
 {
     if (index >= 1)
     {
-        this->stop();
         a_play(--index);
     }
 }
@@ -84,7 +82,6 @@ void Aplayer::a_next()
 {
     if (index < vec_play_list.size() - 1)
     {
-        this->stop();
         a_play(++index);
     }
 }
@@ -100,7 +97,6 @@ QString Aplayer::_get_music_url_(const QString &musci_id)
     connect(manager,&QNetworkAccessManager::finished,&loop,&QEventLoop::quit);
     loop.exec();
     const QString data = reply->readAll();
-//    qDebug() << data;
     QJsonDocument document = QJsonDocument::fromJson(data.toUtf8());
     QJsonObject root = document.object();
     const QString msg = root["msg"].toString();

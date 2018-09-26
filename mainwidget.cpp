@@ -1,14 +1,46 @@
 #include "mainwidget.h"
 #include "QGridLayout"
+#include "aboutwidget.h"
+#include "donatewidget.h"
+#include "skinwidget.h"
 #include <QTimer>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QPalette>
+#include <QJsonDocument>
+#include <QBrush>
+#include <QDesktopServices>
+#include <QDesktopWidget>
+#include <QApplication>
 
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
+    config = new Config(this);
+
     init_ui_();
     init_network_();
     init_a_player_();
+}
+
+MainWidget::~MainWidget()
+{
+    aplayer->stop();
+    aplayer->destroyed();
+    aplayer = nullptr;
+    delete aplayer;
+
+    //皮肤
+    config_json.insert("skin",skin);
+
+    //播放位置
+//    position_ = QString(aplayer->position());
+//    config_json.insert("position",position_);
+
+    //保存配置信息
+    config->create_config(config_json);
+    //保存播放列表
+    config->create_list(vec_play_list);
+
 }
 
 //主界面初始化
@@ -43,6 +75,66 @@ void MainWidget::init_ui_()
     mainLayout->addLayout(stackedLayout,0,1);
     mainLayout->addWidget(footWidget,1,0,2,0);
 
+    //读取配置信息
+    const QJsonObject json = config->read_config();
+    const QString skin_str = json["skin"].toString();
+//    QString position_ = json["position"].toString();
+
+    if (!skin_str.isEmpty())
+    {
+        skin = skin_str;
+    }
+    set_background_image(skin);
+
+    QDesktopWidget *desktop = QApplication::desktop();
+
+    //绑定关于按钮
+    connect(tabWidget,&TabWidget::aboutClicked,this,[=](){
+        AboutWidget *aboutWidget = new AboutWidget;
+        aboutWidget->setWindowIcon(QIcon(":/imgs/lizhi_favicon.ico"));
+
+        int x = (desktop->width() - aboutWidget->width()) / 2;
+        int y = (desktop->height() - aboutWidget->height()) / 2;
+
+        aboutWidget->show();
+
+        aboutWidget->move(x,y);
+    });
+
+    //绑定捐赠按钮
+    connect(tabWidget,&TabWidget::donateClicked,this,[=](){
+        DonateWidget *donateWidget = new DonateWidget;
+        donateWidget->setWindowIcon(QIcon(":/imgs/lizhi_favicon.ico"));
+
+        int x = (desktop->width() - donateWidget->width()) / 2;
+        int y = (desktop->height() - donateWidget->height()) / 2;
+
+        donateWidget->show();
+
+        donateWidget->move(x,y);
+    });
+
+    //绑定Github按钮
+    connect(tabWidget,&TabWidget::githubClicked,this,[=](){
+        QDesktopServices::openUrl(QUrl("https://github.com/gcmwhite/lizhiFM"));
+    });
+
+    //绑定皮肤按钮
+    SkinWidget *skinWidget = new SkinWidget;
+    skinWidget->setWindowIcon(QIcon(":/imgs/lizhi_favicon.ico"));
+    connect(skinWidget,&SkinWidget::backgroundSiganl,this,[=](const QString &skin_str){
+        skin = skin_str;
+        set_background_image(skin);
+    });
+    connect(tabWidget,&TabWidget::skinClicked,this,[=](){
+        int x = (desktop->width() - skinWidget->width()) / 2;
+        int y = (desktop->height() - skinWidget->height()) / 2;
+
+        skinWidget->show();
+
+        skinWidget->move(x,y);
+
+    });
 }
 
 //网络初始化
@@ -64,30 +156,6 @@ void MainWidget::init_network_()
             ok[1] = false;
         }
     });
-
-    /*
-    QTimer *timer = new QTimer(this);
-    connect(timer,&QTimer::timeout,this,[=](){
-        static int timer_count = 0;
-        if (timer_count == 0)
-        {
-            radioType->setRadioType(lizhiAPI->get_radio_type());                                        //获取节目类别
-        }else if (timer_count == 1) {
-            hot_grid_widget->set_grid_btn_widget(lizhiAPI->get_hot_grid());                             //获取热门电台
-            timer->setInterval(500);
-        }else if (timer_count == 2)
-        {
-            optimization_grid_widget->set_grid_btn_widget(lizhiAPI->get_optimization_grid());           //获取优选电台
-            timer->stop();
-            timer->disconnect();
-            timer->setParent(nullptr);
-            timer->deleteLater();
-        }
-        timer_count++;
-    });
-    timer->start(50);
-
-    */
 
     musicListWidget = new MusicListWidget;
     stackedLayout->addWidget(musicListWidget);
@@ -250,14 +318,16 @@ void MainWidget::init_a_player_()
 
     //播放按钮
     connect(aplayer,&Aplayer::stateChanged,this,[=](QMediaPlayer::State newState){
+        qDebug() << "newstate:" << newState;
         switch (newState) {
         case QMediaPlayer::PlayingState:
             leftWidget->play_btn_->setIcon(QIcon(":/imgs/pause.ico"));
             this->setWindowTitle(QString("荔枝FM 2.0 dev：%1").arg(title));
             break;
         case QMediaPlayer::PausedState:
-            leftWidget->play_btn_->setIcon(QIcon(":/icons/player_play.ico"));
+            leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
             this->setWindowTitle("荔枝FM 2.0 dev");
+            break;
         case QMediaPlayer::StoppedState:
             leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
             footWidget->time_slider_->setValue(0);
@@ -273,5 +343,33 @@ void MainWidget::init_a_player_()
         leftWidget->list_wigdet_->setCurrentRow(index);
     });
 
+    //读取播放列表信息
+    vec_play_list.clear();
+    vec_play_list = config->read_list();
+    if (vec_play_list.isEmpty())
+        return ;
+    leftWidget->list_wigdet_->clear();
+    for (int i = 0;i < vec_play_list.size();i++)
+    {
+        leftWidget->list_wigdet_->addItem(vec_play_list.at(i).at(1));
+    }
+    aplayer->add_play_list(true,vec_play_list);
+
 }
+
+//设置背景
+void MainWidget::set_background_image(const QString &pix_url)
+{
+    QPixmap pix(pix_url);
+    QPalette m_palette(this->palette());
+    m_palette.setBrush(this->backgroundRole(),QBrush(pix.scaled(this->size(),Qt::IgnoreAspectRatio,Qt::SmoothTransformation)));
+    this->setPalette(m_palette);
+}
+
+void MainWidget::resizeEvent(QResizeEvent *event)
+{
+    set_background_image(skin);
+    QWidget::resizeEvent(event);
+}
+
 

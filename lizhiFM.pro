@@ -25,7 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 RESOURCES += \
     imgs.qrc \
-    qss.qrc
+    qss.qrc \
+    background.qrc
 
 HEADERS += \
     mainwidget.h \
@@ -40,7 +41,8 @@ HEADERS += \
     musiclistwidget.h \
     tagwidget.h \
     aplayer.h \
-#    config.h
+    config.h \
+    skinwidget.h
 
 SOURCES += \
     mainwidget.cpp \
@@ -56,4 +58,5 @@ SOURCES += \
     musiclistwidget.cpp \
     tagwidget.cpp \
     aplayer.cpp \
-#    config.cpp
+    config.cpp \
+    skinwidget.cpp

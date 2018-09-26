@@ -44,31 +44,31 @@ void TabWidget::mousePressEvent(QMouseEvent *event)        //鼠标按下检测
             if (event->pos().x() >= width() - size - 5
                     && event->pos().x() <= width() - 5)        //about按钮
             {
-                qDebug() << "about按钮按下";
+//                qDebug() << "about按钮按下";
                 emit aboutClicked();
             }
             if (event->pos().x() >= width() - size*2 - 10
                     && event->pos().x() <= width() - size - 10)       //donate按钮
             {
-                qDebug() << "donate按钮按下";
+//                qDebug() << "donate按钮按下";
                 emit donateClicked();
             }
             if (event->pos().x() >= width() - size*3 - 15
                     && event->pos().x() <= width() - size*2 -15)      //setting按钮按下
             {
-                qDebug() << "setting按钮按下";
+//                qDebug() << "setting按钮按下";
                 emit settingClicked();
             }
             if (event->pos().x() >= width() - size*4 - 20
                     && event->pos().x() <= width() - size*3 -20)      //github按钮按下
             {
-                qDebug() << "github按钮按下";
+//                qDebug() << "github按钮按下";
                 emit githubClicked();
             }
             if (event->pos().x() >= width() - size*5 - 25
                     && event->pos().x() <= width() - size*4 -25)      //skin按钮按下
             {
-                qDebug() << "skin按钮按下";
+//                qDebug() << "skin按钮按下";
                 emit skinClicked();
             }
         }

@@ -21,7 +21,7 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
 
     view = new QTableView;
     view->setModel(head);
-    view->setAlternatingRowColors(true);
+//    view->setAlternatingRowColors(true);
     view->setShowGrid(false);
     view->setSelectionBehavior(QAbstractItemView::SelectRows);
     view->setEditTriggers(QAbstractItemView::NoEditTriggers);
