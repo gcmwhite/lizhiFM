@@ -2,9 +2,6 @@
 
 - **声明：**
 
-
-![Screenshot_20180928_192951.png][3]
-
 更新了一下荔枝FM，重构了大部分的代码。
 使代码更加的清晰，简化了冗余代码。
 修复了大量BUG，新增检查新版本的功能。
@@ -20,6 +17,8 @@
 编辑default.desktop文件件，将Exec和Icon改为你保存AppRun和lizhi_favicon.ico目录的绝对地址
 BUG：
 播放出现卡顿：缓冲问题，暂停一会儿再播放就OK了。
+
+![Screenshot_20180928_192951.png][3]
 
 ![Screenshot_20180928_193018.png][4]
 
