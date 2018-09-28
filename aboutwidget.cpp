@@ -1,16 +1,21 @@
 #include "aboutwidget.h"
 #include <QVBoxLayout>
 #include <QLabel>
+#include <QTextBrowser>
 #include <QDesktopServices>
 #include <QUrl>
 
 AboutWidget::AboutWidget(QWidget *parent) : QWidget(parent)
 {
 //    this->resize(390,320);
+    this->setFixedSize(400,500);
     this->setWindowTitle("关于");
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    QLabel *label = new QLabel;
-    mainLayout->addWidget(label);
+//    QLabel *label = new QLabel;
+    QTextBrowser *text_browser = new QTextBrowser;
+    text_browser->setStyleSheet("background:transparent;");
+//    mainLayout->addWidget(label);
+    mainLayout->addWidget(text_browser);
     QString str = "<html>"
             "<head/>"
 
@@ -31,6 +36,14 @@ AboutWidget::AboutWidget(QWidget *parent) : QWidget(parent)
                 "<p>版本：v2.0 dev</p>"
                 "<p>更新日期：2018年9月28日</p>"
                 "<p>本次更新内容：</p>"
+                "<p>重构代码，结构更加的清晰，优化荔枝FM API</p>"
+                "<p>新增自动检查更新</p>"
+                "<p>修复大量BUG</p>"
+                "<p>注意：本软件仍有BUG，大部分功能未实现。非正式版本，不过基本收听节目还是可以的。</p>"
+                "<p>欢迎大家上Github上加个小心心，支持本软件请进行捐赠。</p>"
+                "<p>******************************************************</p>"
+                "<p>版本：v1.1</p>"
+                "<p>更新时期：2018年2月11日</p>"
                 "<p>优化界面风格，添加了8款皮肤背景，并且可以设置自定义背景</p>"
                 "添加了皮肤、github、设置、捐赠、关于按钮，其中设置项不可用"
                 "<p>保存播放列表、进度，不用每次打开都重新开始</p>"
@@ -64,8 +77,13 @@ AboutWidget::AboutWidget(QWidget *parent) : QWidget(parent)
             "</body>"
 
             "</html>";
-    label->setText(str);
-    connect(label,&QLabel::linkActivated,this,[=](QString url){
+//    label->setText(str);
+    text_browser->setOpenLinks(false);
+    text_browser->setText(str);
+    connect(text_browser,&QTextBrowser::anchorClicked,this,[=](const QUrl &url){
         QDesktopServices::openUrl(QUrl(url));
     });
+//    connect(label,&QLabel::linkActivated,this,[=](QString url){
+//        QDesktopServices::openUrl(QUrl(url));
+//    });
 }

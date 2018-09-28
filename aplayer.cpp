@@ -18,6 +18,10 @@ Aplayer::Aplayer(QObject *parent)
     request.setRawHeader("X-Requested-With","XMLHttpRequest");
     request.setRawHeader("Connection","keep-alive");
 
+    connect(this,&Aplayer::bufferStatusChanged,this,[=](int percentFilled){
+        qDebug() << "buffer:" << percentFilled;
+    });
+
     //自动播放下一曲
     connect(this,&Aplayer::stateChanged,this,[=](){
         if (this->mediaStatus() == QMediaPlayer::EndOfMedia)

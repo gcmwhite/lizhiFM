@@ -10,6 +10,8 @@
 
 SkinWidget::SkinWidget(QWidget *parent) : QWidget(parent)
 {
+    this->setWindowTitle("皮肤");
+
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     QGridLayout *gridLayout = new QGridLayout;
 

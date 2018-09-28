@@ -77,6 +77,3 @@ QSlider::handle:horizontal{background: qradialgradient(spread:pad, cx:0.5, cy:0.
 
 QSlider::handle:horizontal:hover{background: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0.6 #2A8BDA,stop:0.778409 rgba(255, 255, 255, 255));width: 11px; margin-top: -3px;margin-bottom: -3px;border-radius: 5px;}
 
-
-
-
