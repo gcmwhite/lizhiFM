@@ -2,6 +2,45 @@
 
 - **声明：**
 
+
+![Screenshot_20180928_192951.png][3]
+
+更新了一下荔枝FM，重构了大部分的代码。
+使代码更加的清晰，简化了冗余代码。
+修复了大量BUG，新增检查新版本的功能。
+
+本次更新不属于功能性更新，所以没有添加什么新功能。
+大部分的功能也还未添加，不过使用听FM还是没啥问题的。
+欢迎大家在[Github][1]添加小心心哦。
+另外，开发不易，支持本软件的小伙伴们请进行小额捐赠。
+注意：本软件所有资源均来自荔枝FM官方，禁止使用本软件用于商业目的。
+下载：[lizhifm.tar.gz][2]
+使用：
+下载lizhifm.tar.gz解压至你想要安装的目录
+编辑default.desktop文件件，将Exec和Icon改为你保存AppRun和lizhi_favicon.ico目录的绝对地址
+BUG：
+播放出现卡顿：缓冲问题，暂停一会儿再播放就OK了。
+
+![Screenshot_20180928_193018.png][4]
+
+![Screenshot_20180928_193044.png][5]
+
+![Screenshot_20180928_193231.png][6]
+
+![Screenshot_20180928_193325.png][7]
+
+
+  [1]: https://github.com/gcmwhite/lizhiFM
+  [2]: http://project.51-games.top/update_project/lizhifm.tar.gz
+  [3]: http://project.51-games.top/usr/uploads/2018/09/1407244057.png
+  [4]: http://project.51-games.top/usr/uploads/2018/09/849085017.png
+  [5]: http://project.51-games.top/usr/uploads/2018/09/101968605.png
+  [6]: http://project.51-games.top/usr/uploads/2018/09/1134115693.png
+  [7]: http://project.51-games.top/usr/uploads/2018/09/2638579231.png
+
+----------
+
+
 本软件基于Qt 5.10编写
 
 FM音频资源全部引用自荔枝FM网页版，本软件不具有FM音频资源版权
