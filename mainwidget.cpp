@@ -88,15 +88,16 @@ void MainWidget::init_ui_()
     //读取配置信息
     const QJsonObject json = config->read_config();
     const QString skin_str = json["skin"].toString();
-    const QString version_str = json["version"].toString();
+//    const QString version_str = json["version"].toString();
 //    QString position_ = json["position"].toString();
 
+    if (!skin_str.isEmpty())
+    {
+        skin = skin_str;
+    }
     set_background_image(skin);
 
-    if (!version_str.isEmpty())
-    {
-        version = version_str;
-    }
+    set_background_image(skin);
 
     QDesktopWidget *desktop = QApplication::desktop();
 

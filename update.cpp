@@ -47,7 +47,7 @@ Update::Update(const QString &old_version,QObject *parent)
 
         label_now->setText(QString("当前版本：%1").arg(old_version));
         label_new->setText(QString("最新版本：%1").arg(version));
-        label_detail->setText(QString("更新详情：\n%1").arg(details));
+        label_detail->setText(QString("更新详情：%1").arg(details));
 
         dialog->exec();
     }
