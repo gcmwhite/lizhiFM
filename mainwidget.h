@@ -51,6 +51,7 @@ private:
     Config *config;
     QJsonObject config_json;
     QString skin = ":/background/background_1.jpg";
+    QString version = "2.0 dev";
 //    QString position_ = "0";
 
 signals:

@@ -28,6 +28,7 @@ private:
     QNetworkRequest request;
 
 public:
+    bool play_flag = false;                 //播放状态
     QVector<QStringList> vec_play_list;
 
 signals:

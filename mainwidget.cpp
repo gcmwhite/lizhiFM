@@ -3,6 +3,7 @@
 #include "aboutwidget.h"
 #include "donatewidget.h"
 #include "skinwidget.h"
+#include "update.h"
 #include <QTimer>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -20,6 +21,12 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
     init_ui_();
     init_network_();
     init_a_player_();
+
+    QTimer *timer = new QTimer(this);
+    connect(timer,&QTimer::timeout,this,[=](){
+        new Update(version,this);
+    });
+    timer->start(30000);
 }
 
 MainWidget::~MainWidget()
@@ -31,6 +38,8 @@ MainWidget::~MainWidget()
 
     //皮肤
     config_json.insert("skin",skin);
+    //版本
+    config_json.insert("version",version);
 
     //播放位置
 //    position_ = QString(aplayer->position());
@@ -78,6 +87,7 @@ void MainWidget::init_ui_()
     //读取配置信息
     const QJsonObject json = config->read_config();
     const QString skin_str = json["skin"].toString();
+    const QString version_str = json["version"].toString();
 //    QString position_ = json["position"].toString();
 
     if (!skin_str.isEmpty())
@@ -85,6 +95,11 @@ void MainWidget::init_ui_()
         skin = skin_str;
     }
     set_background_image(skin);
+
+    if (!version_str.isEmpty())
+    {
+        version = version_str;
+    }
 
     QDesktopWidget *desktop = QApplication::desktop();
 
@@ -249,7 +264,7 @@ void MainWidget::init_a_player_()
     });
 
     connect(footWidget->time_slider_,&QSlider::sliderReleased,this,[=](){
-        qDebug() << "timeSliderPressFlag:" <<  timeSliderPressFlag;
+//        qDebug() << "timeSliderPressFlag:" <<  timeSliderPressFlag;
         if (timeSliderPressFlag)
         {
             aplayer->setPosition(qint64(footWidget->time_slider_->value()*1000));
@@ -329,11 +344,14 @@ void MainWidget::init_a_player_()
             this->setWindowTitle("荔枝FM 2.0 dev");
             break;
         case QMediaPlayer::StoppedState:
-            leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
-            footWidget->time_slider_->setValue(0);
-            footWidget->current_time_label_->setText("00:00");
-            footWidget->remaining_time_label_->setText("00:00");
-            this->setWindowTitle("荔枝FM 2.0 dev");
+            if (aplayer->mediaStatus() == QMediaPlayer::EndOfMedia)
+            {
+                leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
+                footWidget->time_slider_->setValue(0);
+                footWidget->current_time_label_->setText("00:00");
+                footWidget->remaining_time_label_->setText("00:00");
+                this->setWindowTitle("荔枝FM 2.0 dev");
+            }
             break;
         }
     });

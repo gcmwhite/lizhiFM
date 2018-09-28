@@ -9,6 +9,7 @@
 Aplayer::Aplayer(QObject *parent)
     : QMediaPlayer(parent)
 {
+
     manager = new QNetworkAccessManager(this);
     request.setRawHeader("Host","www.lizhi.fm");
     request.setHeader(QNetworkRequest::UserAgentHeader,"Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:62.0) Gecko/20100101 Firefox/62.0");
@@ -30,8 +31,8 @@ Aplayer::Aplayer(QObject *parent)
         emit current_media_index_changed(index);
         emit current_media_title_changed(vec_play_list.at(index).at(1));
     });
-}
 
+}
 
 //添加播放列表
 void Aplayer::add_play_list(const bool ok,const QVector<QStringList> &vec_list)
@@ -65,10 +66,11 @@ void Aplayer::a_play()
 void Aplayer::a_play(int index)
 {
     this->setMedia(QUrl(_get_music_url_(vec_play_list.at(index).at(0))));
-    a_play();
+    this->play();
 }
 
 //上一曲
+
 void Aplayer::a_previous()
 {
     if (index >= 1)
@@ -77,7 +79,10 @@ void Aplayer::a_previous()
     }
 }
 
+
+
 //下一曲
+
 void Aplayer::a_next()
 {
     if (index < vec_play_list.size() - 1)
@@ -85,6 +90,7 @@ void Aplayer::a_next()
         a_play(++index);
     }
 }
+
 
 //获取音乐地址
 QString Aplayer::_get_music_url_(const QString &musci_id)

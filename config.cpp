@@ -82,11 +82,12 @@ void Config::create_list(const QVector<QStringList> &vec_list)
         sql_query.bindValue(0,i);
         sql_query.bindValue(1,music_id);
         sql_query.bindValue(2,music_name);
-        bool ok = sql_query.exec();
-        if (ok)
-            qDebug() << "插入成功!" << i;
-        else
-            qDebug() << "插入失败！" << i;
+        sql_query.exec();
+//        bool ok = sql_query.exec();
+//        if (ok)
+//            qDebug() << "插入成功!" << i;
+//        else
+//            qDebug() << "插入失败！" << i;
     }
     database.close();
 }

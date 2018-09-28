@@ -42,7 +42,8 @@ HEADERS += \
     tagwidget.h \
     aplayer.h \
     config.h \
-    skinwidget.h
+    skinwidget.h \
+    update.h
 
 SOURCES += \
     mainwidget.cpp \
@@ -59,4 +60,5 @@ SOURCES += \
     tagwidget.cpp \
     aplayer.cpp \
     config.cpp \
-    skinwidget.cpp
+    skinwidget.cpp \
+    update.cpp
