@@ -25,6 +25,7 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
     QTimer *timer = new QTimer(this);
     connect(timer,&QTimer::timeout,this,[=](){
         new Update(version,this);
+        timer->stop();
     });
     timer->start(30000);
 }
@@ -39,7 +40,7 @@ MainWidget::~MainWidget()
     //皮肤
     config_json.insert("skin",skin);
     //版本
-    config_json.insert("version",version);
+//    config_json.insert("version",version);
 
     //播放位置
 //    position_ = QString(aplayer->position());
@@ -90,10 +91,6 @@ void MainWidget::init_ui_()
     const QString version_str = json["version"].toString();
 //    QString position_ = json["position"].toString();
 
-    if (!skin_str.isEmpty())
-    {
-        skin = skin_str;
-    }
     set_background_image(skin);
 
     if (!version_str.isEmpty())

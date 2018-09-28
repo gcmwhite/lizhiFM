@@ -32,6 +32,7 @@ Update::Update(const QString &old_version,QObject *parent)
     if (old_version != version)
     {
         QDialog *dialog = new QDialog;
+        dialog->setWindowTitle(name);
         dialog->resize(300,300);
         QVBoxLayout *layout = new QVBoxLayout(dialog);
 
