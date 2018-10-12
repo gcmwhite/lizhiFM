@@ -43,13 +43,13 @@ BUG：
 ![Screenshot_20180928_193325.png][7]
 
 
-  [1]: https://github.com/gcmwhite/lizhiFM
-  [2]: http://project.51-games.top/update_project/lizhifm.tar.gz
-  [3]: http://project.51-games.top/usr/uploads/2018/09/1407244057.png
-  [4]: http://project.51-games.top/usr/uploads/2018/09/849085017.png
-  [5]: http://project.51-games.top/usr/uploads/2018/09/101968605.png
-  [6]: http://project.51-games.top/usr/uploads/2018/09/1134115693.png
-  [7]: http://project.51-games.top/usr/uploads/2018/09/2638579231.png
+[1]: https://github.com/gcmwhite/lizhiFM
+[2]: http://project.51-games.top/update_project/lizhifm.tar.gz
+[3]: http://project.51-games.top/usr/uploads/2018/09/1407244057.png
+[4]: http://project.51-games.top/usr/uploads/2018/09/849085017.png
+[5]: http://project.51-games.top/usr/uploads/2018/09/101968605.png
+[6]: http://project.51-games.top/usr/uploads/2018/09/1134115693.png
+[7]: http://project.51-games.top/usr/uploads/2018/09/2638579231.png
 
 ----------
 
@@ -171,7 +171,36 @@ Appimage格式请自行创建桌面文件
 
 运行程序终端
 
+```shell
 ./M_7-x86_64.AppImage
+```
 
+## Flatpak相关
 
+如果是第一次使用flatpak，请先安装flatpak相关的软件包。
 
+```shell
+sudo apt install flatpak flatpak-builder
+sudo apt install deepin-fprt-com.deepin.platform-15.5 deepin-fprt-com.deepin.sdk-15.5
+```
+安装lizhiFM
+
+```shell
+flatpak install lizhiFM.flatpak --user
+```
+
+运行lizhiFM
+
+```shell
+flatpak run org.deepin.baicai.lizhiFM
+```
+
+如果你想尝试自己打flatpak单文件包，进入`flatpak`目录，运行
+
+```shell
+flatpak-builder build-dir org.deepin.baicai.lizhiFM.json --force-clean
+flatpak-builder --repo=repo --force-clean build-dir org.deepin.baicai.lizhiFM.json 
+flatpak build-bundle repo lizhiFM.flatpak org.deepin.baicai.lizhiFM
+```
+
+如果没有错误，最后将生成一个`lizhiFM.flatpak`文件。
