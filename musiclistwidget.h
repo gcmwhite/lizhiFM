@@ -50,6 +50,7 @@ signals:
 
 public slots:
 
+
 };
 
 #endif // MUSICLISTWIDGET_H

@@ -16,13 +16,15 @@ public:
     void add_play_list(const bool,const QVector<QStringList> &);
     void a_play();
     void a_play(int);
+    void a_play(const QString &);
     void a_previous();
     void a_next();
+    int get_current_index();
+    void set_current_index(int);
 
 private:
     QString _get_music_url_(const QString &);
     int index = 0;
-
 private:
     QNetworkAccessManager *manager;
     QNetworkRequest request;

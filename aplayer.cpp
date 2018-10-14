@@ -24,6 +24,8 @@ Aplayer::Aplayer(QObject *parent)
 
     //自动播放下一曲
     connect(this,&Aplayer::stateChanged,this,[=](){
+        if (vec_play_list.isEmpty())
+            return ;
         if (this->mediaStatus() == QMediaPlayer::EndOfMedia)
         {
             a_next();
@@ -32,6 +34,8 @@ Aplayer::Aplayer(QObject *parent)
 
     //歌曲切换
     connect(this,&Aplayer::currentMediaChanged,this,[=](){
+        if (vec_play_list.isEmpty())
+            return ;
         emit current_media_index_changed(index);
         emit current_media_title_changed(vec_play_list.at(index).at(1));
     });
@@ -70,6 +74,14 @@ void Aplayer::a_play()
 void Aplayer::a_play(int index)
 {
     this->setMedia(QUrl(_get_music_url_(vec_play_list.at(index).at(0))));
+    this->play();
+}
+
+void Aplayer::a_play(const QString &data_id)
+{
+    qDebug() << "测试殿2";
+    this->setMedia(QUrl(_get_music_url_(data_id)));
+    qDebug() << "测试殿3";
     this->play();
 }
 
@@ -118,4 +130,16 @@ QString Aplayer::_get_music_url_(const QString &musci_id)
         return music_url;
     }
     return "";
+}
+
+//获取当前正在播放的曲目
+int Aplayer::get_current_index()
+{
+    return index;
+}
+
+//更改当前播放的曲目
+void Aplayer::set_current_index(int num)
+{
+    index = num;
 }

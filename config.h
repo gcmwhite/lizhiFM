@@ -12,8 +12,9 @@ public:
     explicit Config(QObject *parent = nullptr);
     void create_config(const QJsonObject &);
     QJsonObject read_config();
-    void create_list(const QVector<QStringList> &);
-    QVector<QStringList> read_list();
+
+private:
+    QString path;
 
 signals:
 
