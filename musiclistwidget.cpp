@@ -26,6 +26,11 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     view->setSelectionBehavior(QAbstractItemView::SelectRows);
     view->setEditTriggers(QAbstractItemView::NoEditTriggers);
     view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    view->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    view->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    view->setColumnWidth(1,300);
+    view->setColumnWidth(2,100);
+
 
     const QSize _M_SIZE_(25,25);
 
