@@ -62,3 +62,7 @@ SOURCES += \
     config.cpp \
     skinwidget.cpp \
     update.cpp
+
+isEmpty(BINDIR):BINDIR=/usr/bin
+target.path = $$INSTROOT$$BINDIR
+INSTALLS += target

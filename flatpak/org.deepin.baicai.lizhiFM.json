@@ -1,0 +1,33 @@
+{
+    "app-id": "org.deepin.baicai.lizhiFM",
+    "runtime": "com.deepin.Platform",
+    "runtime-version": "15.5.2",
+    "sdk": "com.deepin.Sdk",
+    "command": "lizhiFM",
+    "finish-args": [
+    "--share=ipc",
+    "--socket=x11",
+    "--socket=pulseaudio",
+    "--share=network",
+    "--device=dri"
+    ],
+    "modules": [{
+    "name": "lizhiFM",
+    "no-autogen": true,
+    "sources": [{
+        "type": "git",
+        "url": "https://github.com/gcmwhite/lizhiFM.git",
+        "branch": "master"
+      },
+      {
+        "type": "script",
+        "commands": [
+          "sed -i 's|/usr|/app|g' lizhiFM.pro",
+          "qmake PREFIX=/app"
+        ],
+        "dest-filename": "configure"
+      }
+    ]
+  }
+     ]
+}
