@@ -1,6 +1,8 @@
 #include "leftwidget.h"
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QListWidget>
+#include <QAbstractItemView>
 
 LeftWidget::LeftWidget(QWidget *parent) : QWidget(parent)
 {
@@ -48,4 +50,22 @@ LeftWidget::LeftWidget(QWidget *parent) : QWidget(parent)
     next_btn_->setFixedSize(BTN_SIZE);
 
     list_wigdet_->addItem("当前列表为空！");
+    list_wigdet_->setSelectionMode(QAbstractItemView::ExtendedSelection);           //多行选中
+
+    menu_ = new QMenu(list_wigdet_);
+    position_ = new QAction("定位");
+    remove_ = new QAction("移除选中曲目");
+    clear_ = new QAction("清空列表");
+
+    menu_->addAction(position_);
+    menu_->addAction(remove_);
+    menu_->addAction(clear_);
+
+}
+
+void LeftWidget::contextMenuEvent(QContextMenuEvent *event)
+{
+    menu_->move(QCursor::pos());
+    menu_->exec();
+    event->accept();
 }

@@ -3,6 +3,7 @@
 #include "aboutwidget.h"
 #include "donatewidget.h"
 #include "skinwidget.h"
+#include "config.h"
 #include "update.h"
 #include <QTimer>
 #include <QJsonObject>
@@ -13,10 +14,37 @@
 #include <QDesktopServices>
 #include <QDesktopWidget>
 #include <QApplication>
+#include <QMessageBox>
 
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
-    config = new Config(this);
+    Config *config = new Config(this);
+    QJsonObject configurationJson = config->read_config();
+    qDebug() << "configr:" << configurationJson;
+
+    if (!configurationJson.isEmpty())
+
+    {
+        QString skinTemp = configurationJson["skin"].toString();
+        if (skinTemp.isEmpty())
+            skin_ = ":/background/background_1.jpg";
+        else
+            skin_ = skinTemp;
+
+        QString positionTemp = configurationJson["position"].toString();
+        if (positionTemp.isEmpty())
+            position_ = "0";
+        else
+            position_ = positionTemp;
+
+        QString currentMusicTemp = configurationJson["currentMusic"].toString();
+        if (currentMusicTemp.isEmpty())
+            currentMusic = "0";
+        else
+            currentMusic = currentMusicTemp;
+
+        playListJsonArray_ = configurationJson["playListJsonArray"].toArray();
+    }
 
     init_ui_();
     init_network_();
@@ -28,37 +56,46 @@ MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
         timer->stop();
     });
     timer->start(30000);
+
 }
 
 MainWidget::~MainWidget()
 {
-    aplayer->stop();
-    aplayer->destroyed();
-    aplayer = nullptr;
-    delete aplayer;
 
-    //皮肤
-    config_json.insert("skin",skin);
-    //版本
-//    config_json.insert("version",version);
+    Config *config = new Config(this);
+    QJsonObject configurationJson;          //配置信息
+    configurationJson.insert("skin",skin_);
+    if (aplayer->position() != 0)
+        position_ = QString::number(aplayer->position()/1000);
+    else
+        position_ = "0";
+    configurationJson.insert("position",position_);
+    configurationJson.insert("currentMusic",QString::number(aplayer->get_current_index()));
 
-    //播放位置
-//    position_ = QString(aplayer->position());
-//    config_json.insert("position",position_);
+    QJsonArray jsArray;
+    for (int i = 0;i < vec_play_list.size();i++)
+    {
+        QStringList list = vec_play_list.at(i);
+        QJsonObject tempJson;
+        tempJson.insert("data-id",list.at(0));
+        tempJson.insert("audioName",list.at(1));
+        jsArray.append(tempJson);
+    }
+//    qDebug() << "vect:" << vec_play_list;
 
-    //保存配置信息
-    config->create_config(config_json);
-    //保存播放列表
-    config->create_list(vec_play_list);
+    configurationJson.insert("playListJsonArray",jsArray);
+
+    qDebug() << "configw:" << configurationJson;
+    config->create_config(configurationJson);
 
 }
 
 //主界面初始化
 void MainWidget::init_ui_()
 {
-    this->resize(990,590);
+    this->resize(1100,590);
     this->setWindowIcon(QIcon(":/imgs/lizhi_favicon.ico"));
-    this->setWindowTitle("荔枝FM 2.0 dev");
+    this->setWindowTitle("荔枝FM 2.0");
 
     leftWidget = new LeftWidget;
     footWidget = new FootWidget;
@@ -85,19 +122,7 @@ void MainWidget::init_ui_()
     mainLayout->addLayout(stackedLayout,0,1);
     mainLayout->addWidget(footWidget,1,0,2,0);
 
-    //读取配置信息
-    const QJsonObject json = config->read_config();
-    const QString skin_str = json["skin"].toString();
-//    const QString version_str = json["version"].toString();
-//    QString position_ = json["position"].toString();
-
-    if (!skin_str.isEmpty())
-    {
-        skin = skin_str;
-    }
-    set_background_image(skin);
-
-    set_background_image(skin);
+    set_background_image(skin_);
 
     QDesktopWidget *desktop = QApplication::desktop();
 
@@ -136,8 +161,8 @@ void MainWidget::init_ui_()
     SkinWidget *skinWidget = new SkinWidget;
     skinWidget->setWindowIcon(QIcon(":/imgs/lizhi_favicon.ico"));
     connect(skinWidget,&SkinWidget::backgroundSiganl,this,[=](const QString &skin_str){
-        skin = skin_str;
-        set_background_image(skin);
+        skin_ = skin_str;
+        set_background_image(skin_);
     });
     connect(tabWidget,&TabWidget::skinClicked,this,[=](){
         int x = (desktop->width() - skinWidget->width()) / 2;
@@ -255,6 +280,23 @@ void MainWidget::init_a_player_()
 
     });
 
+    //播放当前音乐
+    connect(musicListWidget,&MusicListWidget::play_current_music_signal,this,[=](const QStringList &list){
+        aplayer->a_play(list.at(0));
+        this->setWindowTitle("荔枝FM 2.0："+list.at(1));
+    });
+
+    connect(leftWidget->list_wigdet_,&QListWidget::doubleClicked,this,[=](){
+        if (leftWidget->list_wigdet_->item(0)->text() == "当前列表为空！")
+        {
+            QMessageBox::warning(this,"注意","当前列表为空！",QMessageBox::Yes);
+            return ;
+        }
+        int index = leftWidget->list_wigdet_->currentIndex().row();
+        aplayer->set_current_index(index);
+        aplayer->a_play(index);
+    });
+
     //进度条控制
     static bool timeSliderPressFlag = false;
     connect(footWidget->time_slider_,&QSlider::sliderPressed,this,[=](){
@@ -274,7 +316,7 @@ void MainWidget::init_a_player_()
     connect(aplayer,&Aplayer::positionChanged,this,[=](qint64 position){
         int currentT = int(position/1000);
         int remainT = int((aplayer->duration()-position)/1000);
-        if (position == 0)
+        if (position <= 3000)
         {
             footWidget->time_slider_->setRange(0,int(aplayer->duration()/1000));
         }
@@ -335,11 +377,11 @@ void MainWidget::init_a_player_()
         switch (newState) {
         case QMediaPlayer::PlayingState:
             leftWidget->play_btn_->setIcon(QIcon(":/imgs/pause.ico"));
-            this->setWindowTitle(QString("荔枝FM 2.0 dev：%1").arg(title));
+            this->setWindowTitle(QString("荔枝FM 2.0：%1").arg(title));
             break;
         case QMediaPlayer::PausedState:
             leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
-            this->setWindowTitle("荔枝FM 2.0 dev");
+            this->setWindowTitle("荔枝FM 2.0");
             break;
         case QMediaPlayer::StoppedState:
             if (aplayer->mediaStatus() == QMediaPlayer::EndOfMedia)
@@ -348,7 +390,7 @@ void MainWidget::init_a_player_()
                 footWidget->time_slider_->setValue(0);
                 footWidget->current_time_label_->setText("00:00");
                 footWidget->remaining_time_label_->setText("00:00");
-                this->setWindowTitle("荔枝FM 2.0 dev");
+                this->setWindowTitle("荔枝FM 2.0");
             }
             break;
         }
@@ -359,17 +401,62 @@ void MainWidget::init_a_player_()
         leftWidget->list_wigdet_->setCurrentRow(index);
     });
 
+    //leftwidget->listwidget
+    //定位当前正在播放的曲目
+    connect(leftWidget->position_,&QAction::triggered,this,[=](){
+        leftWidget->list_wigdet_->setCurrentRow(aplayer->get_current_index());
+    });
+
+    //移除选中曲目
+    connect(leftWidget->remove_,&QAction::triggered,this,[=](){
+        if (leftWidget->list_wigdet_->item(0)->text() == "当前列表为空！")
+            return ;
+        QList<QListWidgetItem*> list = leftWidget->list_wigdet_->selectedItems();
+
+        if (list.isEmpty())
+        {
+            leftWidget->list_wigdet_->addItem("当前列表为空！");
+            return;
+        }
+        foreach (QListWidgetItem *item, list) {
+//            qDebug() << "item:" << leftWidget->list_wigdet_->row(item);
+            int index = leftWidget->list_wigdet_->row(item);
+            aplayer->vec_play_list.removeAt(index);
+            vec_play_list.removeAt(index);
+            leftWidget->list_wigdet_->takeItem(index);
+        }
+    });
+
+    //清空列表
+    connect(leftWidget->clear_,&QAction::triggered,this,[=](){
+        aplayer->vec_play_list.clear();
+        vec_play_list.clear();
+        leftWidget->list_wigdet_->clear();
+        leftWidget->list_wigdet_->addItem("当前列表为空！");
+    });
+
     //读取播放列表信息
+
+    if (playListJsonArray_.isEmpty())
+        return;
+
     vec_play_list.clear();
-    vec_play_list = config->read_list();
-    if (vec_play_list.isEmpty())
-        return ;
     leftWidget->list_wigdet_->clear();
-    for (int i = 0;i < vec_play_list.size();i++)
+    for (int i = 0;i < playListJsonArray_.size();i++)
     {
-        leftWidget->list_wigdet_->addItem(vec_play_list.at(i).at(1));
+        QStringList list;
+        const QJsonObject temp_json = playListJsonArray_.at(i).toObject();
+        const QString audioName = temp_json["audioName"].toString();
+        list << temp_json["data-id"].toString();
+        list << audioName;
+        leftWidget->list_wigdet_->addItem(audioName);
+        vec_play_list.append(list);
     }
-    aplayer->add_play_list(true,vec_play_list);
+
+    aplayer->set_current_index(currentMusic.toInt());
+    aplayer->add_play_list(false,vec_play_list);
+//    aplayer->setPosition(qint64(position_.toInt()*1000));
+    aplayer->pause();
 
 }
 
@@ -384,7 +471,7 @@ void MainWidget::set_background_image(const QString &pix_url)
 
 void MainWidget::resizeEvent(QResizeEvent *event)
 {
-    set_background_image(skin);
+    set_background_image(skin_);
     QWidget::resizeEvent(event);
 }
 

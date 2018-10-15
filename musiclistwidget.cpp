@@ -26,6 +26,11 @@ MusicListWidget::MusicListWidget(QWidget *parent) : QWidget(parent)
     view->setSelectionBehavior(QAbstractItemView::SelectRows);
     view->setEditTriggers(QAbstractItemView::NoEditTriggers);
     view->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    view->horizontalHeader()->setSectionResizeMode(1,QHeaderView::Fixed);
+    view->horizontalHeader()->setSectionResizeMode(2,QHeaderView::Fixed);
+    view->setColumnWidth(1,300);
+    view->setColumnWidth(2,100);
+
 
     const QSize _M_SIZE_(25,25);
 
@@ -177,12 +182,29 @@ void MusicListWidget::set_music_list_widget(const QJsonObject &json)
 
     //添加选中列表
     connect(add_play_list_selection,&QAction::triggered,this,[=](){
-        qDebug() << "添加选中列表";
+        QItemSelectionModel *selections = view->selectionModel();
+        QModelIndexList selected = selections->selectedRows();
+        QJsonObject jsObject;
+        QJsonArray jsArray;
+        foreach (QModelIndex index, selected)
+        {
+            jsArray.append(js_array.at(index.row()));
+        }
+        jsObject.insert("list",jsArray);
+        emit add_play_list_signal(false,jsObject);
     });
 
     //播放当前音乐
+    connect(view,&QTableView::doubleClicked,play_current_music,&QAction::trigger);
+
     connect(play_current_music,&QAction::triggered,this,[=](){
-        qDebug() << "播放当前音乐";
+        int index = view->currentIndex().row();
+        QString data_id = js_array.at(index).toObject()["data-id"].toString();
+        QString audioName = js_array.at(index).toObject()["audioName"].toString();
+        qDebug() << "播放当前音乐:" << index << ", data-id:" << data_id << ", audioName" << audioName;
+
+        QStringList list = QStringList() << data_id << audioName;
+        emit play_current_music_signal(list);
     });
 
 }
@@ -193,4 +215,5 @@ void MusicListWidget::contextMenuEvent(QContextMenuEvent *event)
     menu->exec();
     event->accept();
 }
+
 

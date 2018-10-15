@@ -10,10 +10,10 @@
 #include "musiclistwidget.h"
 #include "tagwidget.h"
 #include "aplayer.h"
-#include "config.h"
 #include <QWidget>
 #include <QGridLayout>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QStackedLayout>
 #include <QPixmap>
 #include <QResizeEvent>
@@ -47,12 +47,15 @@ private:
     Aplayer *aplayer;
     QVector<QStringList> vec_play_list;
 
+    //版本信息
+    QString version = "2.0-release";                                //版本
+
     //配置信息
-    Config *config;
-    QJsonObject config_json;
-    QString skin = ":/background/background_1.jpg";
-    QString version = "2.0 dev";
-//    QString position_ = "0";
+    QString skin_ = ":/background/background_1.jpg";             //皮肤
+    QString position_ ;                                     //播放位置
+    QString currentMusic;                                       //当前播放曲目
+    QJsonArray playListJsonArray_;                                        //播放列表
+
 
 signals:
 

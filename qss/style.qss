@@ -1,4 +1,3 @@
-
 /*按钮*/
 
 QPushButton[flat="false"]{padding:6px;background:rgba(0,152,50,0.2);border:1px solid #FCFCFC;border-radius:10px;}
