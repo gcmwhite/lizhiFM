@@ -6,6 +6,7 @@
 #include <QDialog>
 #include <QLabel>
 #include <QVBoxLayout>
+#include <QDesktopServices>
 
 Update::Update(const QString &old_version,QObject *parent)
     : QObject(parent)
@@ -48,6 +49,10 @@ Update::Update(const QString &old_version,QObject *parent)
         label_now->setText(QString("当前版本：%1").arg(old_version));
         label_new->setText(QString("最新版本：%1").arg(version));
         label_detail->setText(QString("更新详情：%1").arg(details));
+
+        connect(label_detail,&QLabel::linkActivated,this,[=](const QString &url){
+            QDesktopServices::openUrl(QUrl(url));
+        });
 
         dialog->exec();
     }
