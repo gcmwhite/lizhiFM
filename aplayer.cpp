@@ -79,9 +79,7 @@ void Aplayer::a_play(int index)
 
 void Aplayer::a_play(const QString &data_id)
 {
-    qDebug() << "测试殿2";
     this->setMedia(QUrl(_get_music_url_(data_id)));
-    qDebug() << "测试殿3";
     this->play();
 }
 

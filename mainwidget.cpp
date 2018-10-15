@@ -95,7 +95,7 @@ void MainWidget::init_ui_()
 {
     this->resize(1100,590);
     this->setWindowIcon(QIcon(":/imgs/lizhi_favicon.ico"));
-    this->setWindowTitle("荔枝FM 2.0 dev");
+    this->setWindowTitle("荔枝FM 2.0");
 
     leftWidget = new LeftWidget;
     footWidget = new FootWidget;
@@ -282,9 +282,8 @@ void MainWidget::init_a_player_()
 
     //播放当前音乐
     connect(musicListWidget,&MusicListWidget::play_current_music_signal,this,[=](const QStringList &list){
-        qDebug() << "测试殿1";
         aplayer->a_play(list.at(0));
-        this->setWindowTitle("荔枝FM 2.0 dev："+list.at(1));
+        this->setWindowTitle("荔枝FM 2.0："+list.at(1));
     });
 
     connect(leftWidget->list_wigdet_,&QListWidget::doubleClicked,this,[=](){
@@ -378,11 +377,11 @@ void MainWidget::init_a_player_()
         switch (newState) {
         case QMediaPlayer::PlayingState:
             leftWidget->play_btn_->setIcon(QIcon(":/imgs/pause.ico"));
-            this->setWindowTitle(QString("荔枝FM 2.0 dev：%1").arg(title));
+            this->setWindowTitle(QString("荔枝FM 2.0：%1").arg(title));
             break;
         case QMediaPlayer::PausedState:
             leftWidget->play_btn_->setIcon(QIcon(":/imgs/play.ico"));
-            this->setWindowTitle("荔枝FM 2.0 dev");
+            this->setWindowTitle("荔枝FM 2.0");
             break;
         case QMediaPlayer::StoppedState:
             if (aplayer->mediaStatus() == QMediaPlayer::EndOfMedia)
@@ -391,7 +390,7 @@ void MainWidget::init_a_player_()
                 footWidget->time_slider_->setValue(0);
                 footWidget->current_time_label_->setText("00:00");
                 footWidget->remaining_time_label_->setText("00:00");
-                this->setWindowTitle("荔枝FM 2.0 dev");
+                this->setWindowTitle("荔枝FM 2.0");
             }
             break;
         }
