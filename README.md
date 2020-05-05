@@ -8,3 +8,7 @@
 - 本项目不接受任何形式的捐赠或打赏
 - 本程序仅用于学习交流，禁止任何形式的商业用途
 - 本程序音频资源来自“荔枝Fm”网页版
+- 本项目依赖开源项目：
+  + https://github.com/google/gumbo-parser
+  + https://github.com/lazytiger/gumbo-query
+
