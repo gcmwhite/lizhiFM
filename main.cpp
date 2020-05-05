@@ -1,26 +1,13 @@
 #include "mainwidget.h"
+
+#include <QCoreApplication>
 #include <QApplication>
-#include <QDesktopWidget>
-#include <QFile>
 
-void setStyle(const QString &style)
+int main(int argc, char *argv[])
 {
-    QFile qss(style);
-    qss.open(QFile::ReadOnly);
-    qApp->setStyleSheet(qss.readAll());
-    qss.close();
-}
-
-int main(int argc,char **argv)
-{
-    QApplication app(argc,argv);
-    QDesktopWidget *desktop = QApplication::desktop();
-    MainWidget mw;
-    int x = (desktop->width() - mw.width()) / 2;
-    int y = (desktop->height() - mw.height()) / 2;
-    mw.move(x,y);
-    setStyle(":/qss/style.qss");
-    mw.show();
-
-    return app.exec();
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    QApplication a(argc, argv);
+    MainWidget w;
+    w.show();
+    return a.exec();
 }

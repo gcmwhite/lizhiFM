@@ -1,0 +1,195 @@
+/*标题栏*/
+#titleWidget {
+    height: 20px;
+    border-bottom: 1px solid lightGray;
+}
+
+#logo {
+    min-width: 16px;
+    min-height: 16px;
+    image: url(":/Resources/svg/logo.svg")
+}
+
+/*标题栏按钮*/
+#titleWidget>QPushButton:hover {
+    background-color: lightGray;
+}
+
+#titleWidget>QPushButton:pressed {
+    background-color: gray;
+}
+
+#titleWidget>QPushButton {
+    border: none;
+    width: 16px;
+    height: 16px;
+}
+
+/*中央窗体*/
+#controlWidget,#listView,#rightWidget {
+    border: 1px solid lightGray;
+    border-radius: 3px;
+}
+
+/*左*/
+/*控制窗体*/
+#controlWidget>QPushButton {
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    font-size: 20px;
+    border: none;
+}
+
+#controlWidget>QPushButton:hover {
+    color: #46A3FF;
+}
+
+#controlWidget>QPushButton:pressed {
+    color: #0072E3;
+}
+
+#controlWidget>#playBtn {
+    min-width: 25px;
+    max-width: 25px;
+    min-height: 25px;
+    max-height: 25px;
+    font-size: 25px;
+}
+
+#listView {
+    background-color: transparent;
+}
+
+#listView::item {
+    height: 20px;
+}
+
+/*右*/
+#tabWidget::pane {
+    margin-top: 1px;
+    border-top: 1px solid lightGray;
+}
+
+#tabWidget>QTabBar::tab {
+    width: 50px;
+    height: 20px;
+    margin-left: 10px;
+    border: none;
+    font-size: 10px;
+}
+
+#tabWidget>QTabBar::tab:selected,
+#tabWidget>QTabBar::tab:hover {
+    font-size: 11px;
+    font-weight: bold;
+    border-bottom: 1px solid gray;
+}
+
+#tabWidget>QTabBar::tab:hover {
+    color: #46A3FF;
+    border-bottom: 1px solid #46A3FF;
+}
+
+#tabWidget>QTabBar::tab:pressed {
+    color: #0072E3;
+    border-bottom: 1px solid #0072E3;
+}
+
+#CornerWidget>QPushButton,
+#soundBtn {
+    min-width: 16px;
+    max-width: 16px;
+    min-height: 16px;
+    max-height: 16px;
+    font-size: 16px;
+    border: none;
+}
+
+#CornerWidget>QPushButton:hover,
+#soundBtn:hover,
+RadioListWidget>#footerWidget>QPushButton:hover,
+RadioListWidget>#headerWidget>#backBtn:hover,
+AudioListWidget>#headerWidget>QPushButton:hover,
+AudioListWidget>#footerWidget>QPushButton:hover,
+AudioListItem>QPushButton:hover{
+    color: #46A3FF;
+}
+
+#CornerWidget>QPushButton:pressed,
+#soundBtn:pressed,
+RadioListWidget>#footerWidget>QPushButton:pressed,
+RadioListWidget>#headerWidget>#backBtn:pressed,
+AudioListWidget>#headerWidget>QPushButton:pressed,
+AudioListWidget>#footerWidget>QPushButton:pressed,
+AudioListItem>QPushButton:pressed{
+    color: #0072E3;
+}
+
+#CornerWidget>QPushButton:disabled,
+#soundBtn:disabled,
+RadioListWidget>#footerWidget>QPushButton:disabled,
+RadioListWidget>#footerWidget>QPushButton:disabled,
+AudioListWidget>#footerWidget>QPushButton:disabled{
+    color: lightGray;
+}
+
+/*电台列表*/
+RadioListWidget>#footerWidget>QPushButton,
+AudioListWidget>#headerWidget>QPushButton,
+AudioListWidget>#footerWidget>QPushButton,
+RadioListWidget>#headerWidget>#backBtn {
+    min-width: 20px;
+    max-width: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    font-size: 20px;
+    border: none;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+RadioPushButton {
+    border: none;
+}
+
+/*声音列表*/
+AudioListWidget>QListWidget {
+    background-color: transparent;
+}
+
+AudioListWidget>QListWidget::item {
+    min-height: 30px;
+}
+
+AudioListItem>QPushButton {
+    font-size: 20px;
+    border: none;
+}
+
+/*状态栏*/
+
+#statusWidget {
+    height: 20px;
+    border-top: 1px solid lightGray;
+}
+
+QSlider::groove {
+    border: 1px solid red;
+    height: 3px;
+}
+
+QSlider::handle {
+     border-image: url(":/Resources/svg/handle.svg");
+     width: 11px;
+     margin: -4px;
+}
+
+QSlider::add-page {
+    background: white;
+}
+
+QSlider::sub-page {
+    background: lightBlue;
+}
